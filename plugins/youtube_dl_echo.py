@@ -66,7 +66,7 @@ async def echo(bot, update):
     print(url)
     if ";" in url:
         url_ps = url.split(";")
-        if len(url_parts) == 2:
+        if len(url_ps) == 2:
             url = url_ps[0]
             infol = url_ps[1]
     else:
