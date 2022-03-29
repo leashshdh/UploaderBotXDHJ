@@ -27,8 +27,8 @@ async def start(client, message):
     joinButton = InlineKeyboardMarkup([
         [InlineKeyboardButton("JOIN", url="https://t.me/LegendBot_AI")],
         [InlineKeyboardButton(
-            "Try", url="https://t.me/LegendBot_AIbot")]
+            "Query", url="https://t.me/LegendBot_OP")]
     ])
-    welcomed = f"Hey <b>{message.from_user.first_name}</b>\nThis is Multipurpose Bot that can perform many functions.\n\n/help for More info \n Bot Uptime : {bot_uptime}"
+    welcomed = f"Hi <b>{message.from_user.first_name}</b>\nThis is Bot Officially made By @LegendBot_XD For Download Pw Video.\n\n♦️ Click Here :- /help To Get How To Use\n⚜ Bot Uptime : {bot_uptime}"
     await message.reply_text(welcomed, reply_markup=joinButton)
     raise StopPropagation
