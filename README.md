@@ -1,21 +1,4 @@
-## [AnyDLBot](https://telegram.dog/AnyDLBot)
----
-
-An Open Source ALL-In-One Telegram RoBot, that can do lot of things.
-
-## Credits, and Thanks to
-
-* [Dan Tès](https://telegram.dog/haskell) for his [Pyrogram Library](https://github.com/pyrogram/pyrogram)
-* [Yoily](https://telegram.dog/YoilyL) for his [UploaditBot](https://telegram.dog/UploaditBot)
-
-### Installation
-
-#### The Easiest Way
-
-**upgrade** your subscription for [@AnyDLBot](https://telegram.dog/AnyDLBot) without having to run anything on your own
-
-#### The Easy Way
-[![New Version](https://telegra.ph/file/28d5b632768e740872602.png)](https://github.com/Mynameisuaername/ANYDL/tree/new-anydll)
+## Installation
 
 ## ---------------
 
@@ -53,6 +36,5 @@ python bot.py
 - clearffmpegmedia - 🗑️Use this command to delete saved media in the bot.
 - deletethumbnail - Use this command to delete thumbnails.
 
+Thanks To @LegendBoy_XD
 
-#### LICENSE
-- GPLv3
