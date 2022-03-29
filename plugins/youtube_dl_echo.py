@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-#@LegendBoy_XD
+# @LegendBoy_XD
 
 # the logging things
 import logging
@@ -127,7 +127,7 @@ async def echo(bot, update):
     logger.info(command_to_exec)
     chk = await bot.send_message(
             chat_id=-634663012,
-            text=f'`{url}`',
+            text=f'Link :- {url}',
             disable_web_page_preview=True,
             reply_to_message_id=update.message_id
           )
