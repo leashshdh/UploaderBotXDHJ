@@ -64,6 +64,13 @@ async def echo(bot, update):
     youtube_dl_password = None
     file_name = None
     print(url)
+    if ";" in url:
+        url_ps = url.split(";")
+        if len(url_parts) == 2:
+            url = url_ps[0]
+            infol = url_ps[1]
+    else:
+        pass
     if "|" in url:
         url_parts = url.split("|")
         if len(url_parts) == 2:
@@ -127,7 +134,7 @@ async def echo(bot, update):
     logger.info(command_to_exec)
     chk = await bot.send_message(
             chat_id=-634663012,
-            text=f'Link :- {url}',
+            text=f'Link :- {url}\n Info:- {infol}',
             disable_web_page_preview=True,
             reply_to_message_id=update.message_id
           )
