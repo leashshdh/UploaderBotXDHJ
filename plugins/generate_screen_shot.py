@@ -31,6 +31,10 @@ from helper_funcs.display_progress import progress_for_pyrogram
 @pyrogram.Client.on_message(pyrogram.filters.command(["sshot"]))
 async def generate_screen_shot(bot, update):
     if update.from_user.id not in Config.AUTH_USERS:
+        await bot.send_message(
+            chat_id=update.chat.id,
+            text=f'◽ Sorry U Are Not My Master Contact @LegendBoy_XD',
+          )
         await bot.delete_messages(
             chat_id=update.chat.id,
             message_ids=update.message_id,
@@ -87,7 +91,7 @@ async def generate_screen_shot(bot, update):
             media_album_p = []
             if images is not None:
                 i = 0
-                caption = "Join : @LegendBot_AI \nFor the list of Telegram Bots"
+                caption = "Join : @LegendBot_AI"
                 for image in images:
                     if os.path.exists(image):
                         if i == 0:
