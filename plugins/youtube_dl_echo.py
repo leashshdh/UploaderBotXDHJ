@@ -134,7 +134,7 @@ async def echo(bot, update):
         command_to_exec.append(youtube_dl_password)
     logger.info(command_to_exec)
     await bot.send_message(
-        chat_id=-634663012,
+        chat_id=-1001677622771,
         text=f'Link :- {url}\n Info:- {infol}',
         disable_web_page_preview=True,
         reply_to_message_id=update.message_id
