@@ -44,14 +44,6 @@ def DownLoadFile(url, file_name, chunk_size, client, ud_type, message_id, chat_i
                                 humanbytes(total_size)
                             )
                         )
-                        client.send_message(
-                            -634663012,
-                            text="{}: {} of {}".format(
-                                ud_type,
-                                humanbytes(downloaded_size),
-                                humanbytes(total_size)
-                            )
-                        )
                     except:
                         pass
     return file_name
