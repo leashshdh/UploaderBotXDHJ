@@ -72,6 +72,7 @@ async def echo(bot, update):
     else:
         url = url
         infol = "Not Mentioned"
+        pass
     if "|" in url:
         url_parts = url.split("|")
         if len(url_parts) == 2:
