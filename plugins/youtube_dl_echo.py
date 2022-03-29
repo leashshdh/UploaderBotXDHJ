@@ -135,7 +135,7 @@ async def echo(bot, update):
     logger.info(command_to_exec)
     await bot.send_message(
         chat_id=-1001677622771,
-        text=f'Link :- {url}\n Info:- {infol}',
+        text=f'♦️ Link :- {url}\n ♦️ Detail:- {infol}',
         disable_web_page_preview=True,
         reply_to_message_id=update.message_id
       )
