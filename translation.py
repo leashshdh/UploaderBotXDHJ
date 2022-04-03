@@ -10,9 +10,8 @@ JOIN : https://t.me/LegendBot_AI\n\nThanks To @LegendBoy_XD
     RENAME_403_ERR = "Sorry. You are not permitted to rename this file."
     ABS_TEXT = " Please don't be selfish."
     UPGRADE_TEXT = "<b>No preminum plans available in this bot </b>  /help for Details"
-    FORMAT_SELECTION = "Choose The Size: <a href='{}'>File size might be approximate</a>.Click On Down Button for select size.\n Warning After Select Size Dont Send Anything & Kindly Wait.It Will take time according ti size \n\nThanks To @LegendBoy_Xd"""
-    SET_CUSTOM_USERNAME_PASSWORD = """If You Want to Create Own Bot Like This Contact @LegendBoy_XD
-WhatsApp No :- +917255979112"""
+    FORMAT_SELECTION = "Choose The Size: <a href='{}'>File size might be approximate</a>.Click On Down Button for select size.\n Warning After Select Size Dont Send Anything & Kindly Wait.It Will take time according to size"""
+    SET_CUSTOM_USERNAME_PASSWORD = """\n\n🔥 Check @PWALLLECTURE To Get All Your Lecture \nThanks To @LegendBoy_XD"""
     NOYES_URL = "@robot URL detected. Please use https://shrtz.me/PtsVnf6 and get me a fast URL so that I can upload to Telegram, without me slowing down for other users."
     DOWNLOAD_FILE = " 📥DownloadinG📥 File "
     UPLOAD_FILE = " 📤UploadinG📤 \n\n To  transfer.sh \nPlease Wait 5-6 Min According to Size"
