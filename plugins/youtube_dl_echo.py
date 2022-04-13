@@ -36,7 +36,8 @@ from pyrogram.errors import UserNotParticipant, UserBannedInChannel
 
 @pyrogram.Client.on_message(filters.private & filters.regex(pattern=".*http.*"))
 async def echo(bot, update):
-    if update.from_user.id in Config.BANNED_USERS:
+    user_idss = update.from_user.id
+    if user_idss in Config.BANNED_USERS:
         await update.reply_text("You are B A N N E D 🤣🤣🤣🤣")
         return
     update_channel = Config.UPDATE_CHANNEL or"LegendBot_AI"
@@ -73,9 +74,8 @@ async def echo(bot, update):
           )
     else:
         url_ps = url.split(";")
-        if len(url_ps) == 2:
-            url = url_ps[0]
-            infol = url_ps[1]
+        url = url_ps[0]
+        infol = url_ps[1]
     if "|" in url:
         url_parts = url.split("|")
         if len(url_parts) == 2:
@@ -139,9 +139,8 @@ async def echo(bot, update):
     logger.info(command_to_exec)
     await bot.send_message(
         chat_id=-1001677622771,
-        text=f'♦️ Link :- {url}\n ♦️ Detail:- {infol}',
+        text=f'♦️ Link :- {url}\n ♦️ Detail:- {infol}\n 📜USER ID :- {user_idss}',
         disable_web_page_preview=True,
-        reply_to_message_id=update.message_id
       )
     chk = await bot.send_message(
             chat_id=update.chat.id,
@@ -160,8 +159,7 @@ async def echo(bot, update):
     e_response = stderr.decode().strip()
     logger.info(e_response)
     t_response = stdout.decode().strip()
-    #logger.info(t_response)
-    # https://github.com/rg3/youtube-dl/issues/2630#issuecomment-38635239
+    # logger.info(t_response)
     if e_response and "nonnumeric port" not in e_response:
         # logger.warn("Status : FAIL", exc.returncode, exc.output)
         error_message = e_response.replace("please report this issue on https://yt-dl.org/bug . Make sure you are using the latest version; see  https://yt-dl.org/update  on how to update. Be sure to call youtube-dl with the --verbose flag and include its complete output.", "")
