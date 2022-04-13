@@ -64,15 +64,18 @@ async def echo(bot, update):
     youtube_dl_password = None
     file_name = None
     print(url)
-    if ";" in url:
+    if ";" not in url:
+        await bot.send_message(
+            chat_id=update.chat.id,
+            text=f'Use The Correct Format If U Dont Know Correct Format.❇ CHECK THIS https://youtu.be/mAnDLyMIOiA',
+            disable_web_page_preview=True,
+            reply_to_message_id=update.message_id
+          )
+    else:
         url_ps = url.split(";")
         if len(url_ps) == 2:
             url = url_ps[0]
             infol = url_ps[1]
-    else:
-        url = url
-        infol = "Not Mentioned"
-        pass
     if "|" in url:
         url_parts = url.split("|")
         if len(url_parts) == 2:
