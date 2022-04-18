@@ -64,6 +64,7 @@ async def echo(bot, update):
     youtube_dl_username = None
     youtube_dl_password = None
     file_name = None
+    infol = None
     print(url)
     if ";" not in url:
         await bot.send_message(
