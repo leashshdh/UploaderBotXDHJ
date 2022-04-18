@@ -73,6 +73,7 @@ async def echo(bot, update):
             disable_web_page_preview=True,
             reply_to_message_id=update.message_id
           )
+          return
     else:
         url_ps = url.split(";")
         url = url_ps[0]
