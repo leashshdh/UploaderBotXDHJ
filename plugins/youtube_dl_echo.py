@@ -67,13 +67,12 @@ async def echo(bot, update):
     infol = None
     print(url)
     if ";" not in url:
-        await bot.send_message(
+        return await bot.send_message(
             chat_id=update.chat.id,
             text=f'Use The Correct Format If U Dont Know Correct Format.❇ CHECK THIS https://youtu.be/mAnDLyMIOiA',
             disable_web_page_preview=True,
             reply_to_message_id=update.message_id
           )
-          return
     else:
         url_ps = url.split(";")
         url = url_ps[0]
