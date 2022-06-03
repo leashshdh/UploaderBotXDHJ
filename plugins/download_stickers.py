@@ -31,7 +31,7 @@ logging.getLogger("pyrogram").setLevel(logging.WARNING)
 @pyrogram.Client.on_message(pyrogram.filters.sticker)
 async def DownloadStickersBot(bot, update):
     if update.from_user.id not in Config.AUTH_USERS:
-        await bot.send_messages(
+        await bot.send_message(
             chat_id=update.chat.id,
             text="Buy The Subscriptions From @LegendBoy_XD To Use This Command",
             reply_to_message_id=update.message_id,
