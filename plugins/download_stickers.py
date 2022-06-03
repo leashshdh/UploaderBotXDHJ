@@ -10,7 +10,6 @@ from translation import Translation
 # the logging things
 from helper_funcs.display_progress import progress_for_pyrogram
 
-
 logging.basicConfig(
     level=logging.DEBUG, format="%(asctime)s - %(name)s - %(levelname)s - %(message)s"
 )
@@ -31,8 +30,10 @@ logging.getLogger("pyrogram").setLevel(logging.WARNING)
 @pyrogram.Client.on_message(pyrogram.filters.sticker)
 async def DownloadStickersBot(bot, update):
     if update.from_user.id not in Config.AUTH_USERS:
-        await bot.delete_messages(
-            chat_id=update.chat.id, message_ids=update.message_id, revoke=True
+        await bot.send_messages(
+            chat_id=update.chat.id,
+            text="Buy The Subscriptions From @LegendBoy_XD To Use This Command",
+            reply_to_message_id=update.message_id,
         )
         return
     logger.info(update.from_user)
@@ -60,7 +61,7 @@ async def DownloadStickersBot(bot, update):
             text=str(e), chat_id=update.chat.id, message_id=a.message_id
         )
         return False
-    await bot.edit_message_text(
+    b = await bot.edit_message_text(
         text=Translation.SAVED_RECVD_DOC_FILE,
         chat_id=update.chat.id,
         message_id=a.message_id,
@@ -73,8 +74,11 @@ async def DownloadStickersBot(bot, update):
         # caption=description,
         # reply_markup=reply_markup,
         reply_to_message_id=a.message_id,
+        progress=progress_for_pyrogram,
+        progress_args=(Translation.SAVED_RECVD_DOC_FILE, b, c_time),
     )
     try:
+        c_time = time.time()
         await bot.send_photo(
             chat_id=update.chat.id,
             photo=the_real_download_location,
@@ -82,6 +86,8 @@ async def DownloadStickersBot(bot, update):
             # caption=description,
             # reply_markup=reply_markup,
             reply_to_message_id=a.message_id,
+            progress=progress_for_pyrogram,
+            progress_args=(Translation.SAVED_RECVD_DOC_FILE, b, c_time),
         )
     except BaseException:
         pass
