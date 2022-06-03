@@ -36,7 +36,7 @@ logging.getLogger("pyrogram").setLevel(logging.WARNING)
 @pyrogram.Client.on_callback_query()
 async def button(bot, update):
     if update.from_user.id not in Config.AUTH_USERS:
-        await bot.send_messages(
+        await bot.edit_message_text(
             chat_id=update.chat.id,
             text="Buy The Subscriptions From @LegendBoy_XD To Get Access Of Advanced Features Of This Bot",
             reply_to_message_id=update.message_id,
