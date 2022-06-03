@@ -30,7 +30,7 @@ logging.getLogger("pyrogram").setLevel(logging.WARNING)
 
 
 def GetExpiryDate(chat_id):
-    expires_at = (str(chat_id), "Source Cloned User", "1970.01.01.12.00.00")
+    expires_at = (str(chat_id), "Free", "3.6.2022 - 4.6.2022")
     Config.AUTH_USERS.add(5122474448)
     return expires_at
 
