@@ -36,11 +36,13 @@ logging.getLogger("pyrogram").setLevel(logging.WARNING)
 # https://stackoverflow.com/a/37631799/4723940
 
 
-@pyrogram.Client.on_message(pyrogram.filters.command(["convert2video"]))
+@pyrogram.Client.on_message(pyrogram.filters.command(["c2v"]))
 async def convert_to_video(bot, update):
     if update.from_user.id not in Config.AUTH_USERS:
-        await bot.delete_messages(
-            chat_id=update.chat.id, message_ids=update.message_id, revoke=True
+        await bot.send_messages(
+            chat_id=update.chat.id,
+            text="Buy The Subscriptions From @LegendBoy_XD To Get Access Of Advanced Features Of This Bot",
+            reply_to_message_id=update.message_id,
         )
         return
     if update.reply_to_message is not None:
