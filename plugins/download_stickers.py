@@ -10,6 +10,7 @@ from translation import Translation
 # the logging things
 from helper_funcs.display_progress import progress_for_pyrogram
 
+
 logging.basicConfig(
     level=logging.DEBUG, format="%(asctime)s - %(name)s - %(levelname)s - %(message)s"
 )
