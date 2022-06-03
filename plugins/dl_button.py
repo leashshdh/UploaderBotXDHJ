@@ -132,8 +132,6 @@ async def ddl_call_back(bot, update):
                 message_id=update.message.message_id,
             )
         else:
-            # get the correct width, height, and duration for videos greater than 10MB
-            # ref: message from @BotSupport
             width = 0
             height = 0
             duration = 0
