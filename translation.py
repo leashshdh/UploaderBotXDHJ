@@ -1,6 +1,6 @@
 class Translation(object):
     INFO = f"""
-╭────[ **🔅File Share Bot🔅**]────⍟
+╭────[ **🔅File DRM Video Bot🔅**]────⍟
 │
 ├🔸👨‍💻 **Developer:** [LegendBoy](https://t.me/LegendBoy_XD)
 │
