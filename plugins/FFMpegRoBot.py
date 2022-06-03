@@ -35,7 +35,9 @@ logging.getLogger("pyrogram").setLevel(logging.WARNING)
 async def ffmpegrobot_ad(bot, update):
     if update.from_user.id not in Config.AUTH_USERS:
         await bot.send_messages(
-            chat_id=update.chat.id, text="Buy The Subscriptions From @LegendBoy_XD To Use This Command", reply_to_message_id=update.message_id
+            chat_id=update.chat.id,
+            text="Buy The Subscriptions From @LegendBoy_XD To Use This Command",
+            reply_to_message_id=update.message_id,
         )
         return
     await bot.send_message(
@@ -50,7 +52,9 @@ async def ffmpegrobot_ad(bot, update):
 async def trim(bot, update):
     if update.from_user.id not in Config.AUTH_USERS:
         await bot.send_messages(
-            chat_id=update.chat.id, text="Buy The Subscriptions From @LegendBoy_XD To Use This Command", reply_to_message_id=update.message_id
+            chat_id=update.chat.id,
+            text="Buy The Subscriptions From @LegendBoy_XD To Use This Command",
+            reply_to_message_id=update.message_id,
         )
         return
     saved_file_path = (
@@ -157,7 +161,9 @@ async def trim(bot, update):
 async def storage_info(bot, update):
     if update.from_user.id not in Config.AUTH_USERS:
         await bot.send_messages(
-            chat_id=update.chat.id, text="Buy The Subscriptions From @LegendBoy_XD To Use This Command", reply_to_message_id=update.message_id
+            chat_id=update.chat.id,
+            text="Buy The Subscriptions From @LegendBoy_XD To Use This Command",
+            reply_to_message_id=update.message_id,
         )
         return
     saved_file_path = (
@@ -186,7 +192,9 @@ async def storage_info(bot, update):
 async def clear_media(bot, update):
     if update.from_user.id not in Config.AUTH_USERS:
         await bot.send_messages(
-            chat_id=update.chat.id, text="Buy The Subscriptions From @LegendBoy_XD To Use This Command", reply_to_message_id=update.message_id
+            chat_id=update.chat.id,
+            text="Buy The Subscriptions From @LegendBoy_XD To Use This Command",
+            reply_to_message_id=update.message_id,
         )
         return
     saved_file_path = (
@@ -205,7 +213,9 @@ async def clear_media(bot, update):
 async def download_media(bot, update):
     if update.from_user.id not in Config.AUTH_USERS:
         await bot.send_messages(
-            chat_id=update.chat.id, text="Buy The Subscriptions From @LegendBoy_XD To Use This Command", reply_to_message_id=update.message_id
+            chat_id=update.chat.id,
+            text="Buy The Subscriptions From @LegendBoy_XD To Use This Command",
+            reply_to_message_id=update.message_id,
         )
         return
     saved_file_path = (
