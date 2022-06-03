@@ -1,19 +1,30 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-#@LegendBoy_XD
+# @LegendBoy_XD
 
-# the logging things
-import logging
-logging.basicConfig(level=logging.DEBUG,
-                    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-logger = logging.getLogger(__name__)
-
+import os
 import json
 import math
-import os
-import shutil
-import subprocess
 import time
+import shutil
+import logging
+import pyrogram
+import subprocess
+# the logging things
+from PIL import Image
+from translation import Translation
+from hachoir.parser import createParser
+from plugins.dl_button import ddl_call_back
+from hachoir.metadata import extractMetadata
+from plugins.youtube_dl_button import youtube_dl_call_back
+from helper_funcs.display_progress import humanbytes, progress_for_pyrogram
+
+
+logging.basicConfig(
+    level=logging.DEBUG, format="%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+)
+logger = logging.getLogger(__name__)
+
 
 # the secret configuration specific things
 if bool(os.environ.get("WEBHOOK", False)):
@@ -22,18 +33,10 @@ else:
     from config import Config
 
 # the Strings used for this "thing"
-from translation import Translation
 
-import pyrogram
 logging.getLogger("pyrogram").setLevel(logging.WARNING)
 
-from helper_funcs.display_progress import progress_for_pyrogram, humanbytes
-from plugins.youtube_dl_button import youtube_dl_call_back
-from plugins.dl_button import ddl_call_back
-from hachoir.metadata import extractMetadata
-from hachoir.parser import createParser
 # https://stackoverflow.com/a/37631799/4723940
-from PIL import Image
 
 
 @pyrogram.Client.on_callback_query()
@@ -42,20 +45,21 @@ async def button(bot, update):
         await bot.delete_messages(
             chat_id=update.message.chat.id,
             message_ids=update.message.message_id,
-            revoke=True
+            revoke=True,
         )
         return
     # logger.info(update)
     cb_data = update.data
     if ":" in cb_data:
         # unzip formats
-        extract_dir_path = Config.DOWNLOAD_LOCATION + \
-            "/" + str(update.from_user.id) + "zipped" + "/"
+        extract_dir_path = (
+            Config.DOWNLOAD_LOCATION + "/" + str(update.from_user.id) + "zipped" + "/"
+        )
         if not os.path.isdir(extract_dir_path):
             await bot.delete_messages(
                 chat_id=update.message.chat.id,
                 message_ids=update.message.message_id,
-                revoke=True
+                revoke=True,
             )
             return False
         zip_file_contents = os.listdir(extract_dir_path)
@@ -63,12 +67,12 @@ async def button(bot, update):
         if index_extractor == "NONE":
             try:
                 shutil.rmtree(extract_dir_path)
-            except:
+            except BaseException:
                 pass
             await bot.edit_message_text(
                 chat_id=update.message.chat.id,
                 text=Translation.CANCEL_STR,
-                message_id=update.message.message_id
+                message_id=update.message.message_id,
             )
         elif index_extractor == "ALL":
             i = 0
@@ -86,19 +90,19 @@ async def button(bot, update):
                     progress_args=(
                         Translation.UPLOAD_START,
                         update.message,
-                        start_time
-                    )
+                        start_time,
+                    ),
                 )
                 i = i + 1
                 os.remove(current_file_name)
             try:
                 shutil.rmtree(extract_dir_path)
-            except:
+            except BaseException:
                 pass
             await bot.edit_message_text(
                 chat_id=update.message.chat.id,
                 text=Translation.ZIP_UPLOADED_STR.format(i, "0"),
-                message_id=update.message.message_id
+                message_id=update.message.message_id,
             )
         else:
             file_content = zip_file_contents[int(index_extractor)]
@@ -112,20 +116,16 @@ async def button(bot, update):
                 # reply_markup=reply_markup,
                 reply_to_message_id=update.message.message_id,
                 progress=progress_for_pyrogram,
-                progress_args=(
-                    Translation.UPLOAD_START,
-                    update.message,
-                    start_time
-                )
+                progress_args=(Translation.UPLOAD_START, update.message, start_time),
             )
             try:
                 shutil.rmtree(extract_dir_path)
-            except:
+            except BaseException:
                 pass
             await bot.edit_message_text(
                 chat_id=update.message.chat.id,
                 text=Translation.ZIP_UPLOADED_STR.format("1", "0"),
-                message_id=update.message.message_id
+                message_id=update.message.message_id,
             )
     elif "|" in cb_data:
         await youtube_dl_call_back(bot, update)

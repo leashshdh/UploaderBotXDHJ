@@ -1,15 +1,22 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-#@LegendBoy_XD
-
-# the logging things
-import logging
-logging.basicConfig(level=logging.DEBUG,
-                    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-logger = logging.getLogger(__name__)
+# @LegendBoy_XD
 
 import os
+import logging
 import sqlite3
+import pyrogram
+from translation import Translation
+# the logging things
+from pyrogram import StopPropagation
+from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
+
+
+logging.basicConfig(
+    level=logging.DEBUG, format="%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+)
+logger = logging.getLogger(__name__)
+
 
 # the secret configuration specific things
 if bool(os.environ.get("WEBHOOK", False)):
@@ -18,13 +25,9 @@ else:
     from config import Config
 
 # the Strings used for this "thing"
-from translation import Translation
 
-import pyrogram
 logging.getLogger("pyrogram").setLevel(logging.WARNING)
 
-from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
-from pyrogram import StopPropagation
 
 def GetExpiryDate(chat_id):
     expires_at = (str(chat_id), "Source Cloned User", "1970.01.01.12.00.00")
@@ -40,7 +43,7 @@ async def help_user(bot, update):
         text=Translation.HELP_USER,
         parse_mode="html",
         disable_web_page_preview=True,
-        reply_to_message_id=update.message_id
+        reply_to_message_id=update.message_id,
     )
 
 
@@ -60,13 +63,13 @@ async def get_me_info(bot, update):
 @pyrogram.Client.on_message(pyrogram.filters.command(["starting"]))
 async def start(bot, update):
     # logger.info(update)
-    await update.reply(f"<b>Hii {update.chat.first_name}!</b>\nThis is a Telegram Multipurpose Bot Which can do many functions. /help for more details...  ",reply_markup=InlineKeyboardMarkup(
-            [
-                    InlineKeyboardButton('JOIN', url='https://t.me/LegendBot_AI')
-                ]
-        )
+    await update.reply(
+        f"<b>Hii {update.chat.first_name}!</b>\nThis is a Telegram Multipurpose Bot Which can do many functions. /help for more details...  ",
+        reply_markup=InlineKeyboardMarkup(
+            [InlineKeyboardButton("JOIN", url="https://t.me/LegendBot_AI")]
+        ),
     )
-      
+
 
 @pyrogram.Client.on_message(pyrogram.filters.command(["upgrade"]))
 async def upgrade(bot, update):
@@ -76,5 +79,5 @@ async def upgrade(bot, update):
         text=Translation.UPGRADE_TEXT,
         parse_mode="html",
         reply_to_message_id=update.message_id,
-        disable_web_page_preview=True
+        disable_web_page_preview=True,
     )

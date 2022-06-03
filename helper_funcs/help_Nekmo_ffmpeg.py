@@ -1,19 +1,20 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-#@LegendBoy_XD
+# @LegendBoy_XD
 
-# the logging things
-import logging
-logging.basicConfig(level=logging.DEBUG,
-                    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-logger = logging.getLogger(__name__)
-
-
-import asyncio
 import os
 import time
-from hachoir.metadata import extractMetadata
+import asyncio
+import logging
+# the logging things
 from hachoir.parser import createParser
+from hachoir.metadata import extractMetadata
+
+
+logging.basicConfig(
+    level=logging.DEBUG, format="%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+)
+logger = logging.getLogger(__name__)
 
 
 async def place_water_mark(input_file, output_file, water_mark_file):
@@ -23,11 +24,12 @@ async def place_water_mark(input_file, output_file, water_mark_file):
     # https://stackoverflow.com/a/34547184/4723940
     shrink_watermark_file_genertor_command = [
         "ffmpeg",
-        "-i", water_mark_file,
+        "-i",
+        water_mark_file,
         "-y -v quiet",
         "-vf",
         "scale={}*0.5:-1".format(width),
-        watermarked_file
+        watermarked_file,
     ]
     # print(shrink_watermark_file_genertor_command)
     process = await asyncio.create_subprocess_exec(
@@ -42,15 +44,17 @@ async def place_water_mark(input_file, output_file, water_mark_file):
     t_response = stdout.decode().strip()
     commands_to_execute = [
         "ffmpeg",
-        "-i", input_file,
-        "-i", watermarked_file,
+        "-i",
+        input_file,
+        "-i",
+        watermarked_file,
         "-filter_complex",
         # https://stackoverflow.com/a/16235519
         # "\"[0:0] scale=400:225 [wm]; [wm][1:0] overlay=305:0 [out]\"",
         # "-map \"[out]\" -b:v 896k -r 20 -an ",
-        "\"overlay=(main_w-overlay_w):(main_h-overlay_h)\"",
+        '"overlay=(main_w-overlay_w):(main_h-overlay_h)"',
         # "-vf \"drawtext=text='@FFMovingPictureExpertGroupBOT':x=W-(W/2):y=H-(H/2):fontfile=" + Config.FONT_FILE + ":fontsize=12:fontcolor=white:shadowcolor=black:shadowx=5:shadowy=5\"",
-        output_file
+        output_file,
     ]
     # print(commands_to_execute)
     process = await asyncio.create_subprocess_exec(
@@ -68,8 +72,7 @@ async def place_water_mark(input_file, output_file, water_mark_file):
 
 async def take_screen_shot(video_file, output_directory, ttl):
     # https://stackoverflow.com/a/13891070/4723940
-    out_put_file_name = output_directory + \
-        "/" + str(time.time()) + ".jpg"
+    out_put_file_name = output_directory + "/" + str(time.time()) + ".jpg"
     file_genertor_command = [
         "ffmpeg",
         "-ss",
@@ -78,7 +81,7 @@ async def take_screen_shot(video_file, output_directory, ttl):
         video_file,
         "-vframes",
         "1",
-        out_put_file_name
+        out_put_file_name,
     ]
     # width = "90"
     process = await asyncio.create_subprocess_exec(
@@ -96,12 +99,13 @@ async def take_screen_shot(video_file, output_directory, ttl):
     else:
         return None
 
+
 # https://github.com/Nekmo/telegram-upload/blob/master/telegram_upload/video.py#L26
+
 
 async def cult_small_video(video_file, output_directory, start_time, end_time):
     # https://stackoverflow.com/a/13891070/4723940
-    out_put_file_name = output_directory + \
-        "/" + str(round(time.time())) + ".mp4"
+    out_put_file_name = output_directory + "/" + str(round(time.time())) + ".mp4"
     file_genertor_command = [
         "ffmpeg",
         "-i",
@@ -114,7 +118,7 @@ async def cult_small_video(video_file, output_directory, start_time, end_time):
         "1",
         "-strict",
         "-2",
-        out_put_file_name
+        out_put_file_name,
     ]
     process = await asyncio.create_subprocess_exec(
         *file_genertor_command,
@@ -133,18 +137,13 @@ async def cult_small_video(video_file, output_directory, start_time, end_time):
 
 
 async def generate_screen_shots(
-    video_file,
-    output_directory,
-    is_watermarkable,
-    wf,
-    min_duration,
-    no_of_photos
+    video_file, output_directory, is_watermarkable, wf, min_duration, no_of_photos
 ):
     metadata = extractMetadata(createParser(video_file))
     duration = 0
     if metadata is not None:
         if metadata.has("duration"):
-            duration = metadata.get('duration').seconds
+            duration = metadata.get("duration").seconds
     if duration > min_duration:
         images = []
         ttl_step = duration // no_of_photos
@@ -153,7 +152,9 @@ async def generate_screen_shots(
             ss_img = await take_screen_shot(video_file, output_directory, current_ttl)
             current_ttl = current_ttl + ttl_step
             if is_watermarkable:
-                ss_img = await place_water_mark(ss_img, output_directory + "/" + str(time.time()) + ".jpg", wf)
+                ss_img = await place_water_mark(
+                    ss_img, output_directory + "/" + str(time.time()) + ".jpg", wf
+                )
             images.append(ss_img)
         return images
     else:

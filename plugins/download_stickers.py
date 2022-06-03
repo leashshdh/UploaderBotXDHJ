@@ -1,15 +1,21 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-#@LegendBoy_XD
-
-# the logging things
-import logging
-logging.basicConfig(level=logging.DEBUG,
-                    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-logger = logging.getLogger(__name__)
+# @LegendBoy_XD
 
 import os
 import time
+import logging
+import pyrogram
+from translation import Translation
+# the logging things
+from helper_funcs.display_progress import progress_for_pyrogram
+
+
+logging.basicConfig(
+    level=logging.DEBUG, format="%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+)
+logger = logging.getLogger(__name__)
+
 
 # the secret configuration specific things
 if bool(os.environ.get("WEBHOOK", False)):
@@ -18,29 +24,30 @@ else:
     from config import Config
 
 # the Strings used for this "thing"
-from translation import Translation
 
-import pyrogram
 logging.getLogger("pyrogram").setLevel(logging.WARNING)
-
-from helper_funcs.display_progress import progress_for_pyrogram
 
 
 @pyrogram.Client.on_message(pyrogram.filters.sticker)
 async def DownloadStickersBot(bot, update):
     if update.from_user.id not in Config.AUTH_USERS:
         await bot.delete_messages(
-            chat_id=update.chat.id,
-            message_ids=update.message_id,
-            revoke=True
+            chat_id=update.chat.id, message_ids=update.message_id, revoke=True
         )
         return
     logger.info(update.from_user)
-    download_location = Config.DOWNLOAD_LOCATION + "/" + str(update.from_user.id) + "_DownloadStickersBot_" + str(update.message_id) + ".png"
+    download_location = (
+        Config.DOWNLOAD_LOCATION
+        + "/"
+        + str(update.from_user.id)
+        + "_DownloadStickersBot_"
+        + str(update.message_id)
+        + ".png"
+    )
     a = await bot.send_message(
         chat_id=update.chat.id,
         text=f"Sending Sticker...",
-        reply_to_message_id=update.message_id
+        reply_to_message_id=update.message_id,
     )
     try:
         c_time = time.time()
@@ -50,15 +57,13 @@ async def DownloadStickersBot(bot, update):
         )
     except (ValueError) as e:
         await bot.edit_message_text(
-            text=str(e),
-            chat_id=update.chat.id,
-            message_id=a.message_id
+            text=str(e), chat_id=update.chat.id, message_id=a.message_id
         )
         return False
     await bot.edit_message_text(
         text=Translation.SAVED_RECVD_DOC_FILE,
         chat_id=update.chat.id,
-        message_id=a.message_id
+        message_id=a.message_id,
     )
     c_time = time.time()
     await bot.send_document(
@@ -71,20 +76,20 @@ async def DownloadStickersBot(bot, update):
     )
     try:
         await bot.send_photo(
-          chat_id=update.chat.id,
-          photo=the_real_download_location,
-          # thumb=thumb_image_path,
-          # caption=description,
-          # reply_markup=reply_markup,
-          reply_to_message_id=a.message_id,
+            chat_id=update.chat.id,
+            photo=the_real_download_location,
+            # thumb=thumb_image_path,
+            # caption=description,
+            # reply_markup=reply_markup,
+            reply_to_message_id=a.message_id,
         )
-    except:
-      pass
-    
+    except BaseException:
+        pass
+
     os.remove(the_real_download_location)
     await bot.edit_message_text(
         text=Translation.AFTER_SUCCESSFUL_UPLOAD_MSG,
         chat_id=update.chat.id,
         message_id=a.message_id,
-        disable_web_page_preview=True
+        disable_web_page_preview=True,
     )

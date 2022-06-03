@@ -1,16 +1,26 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-#@LegendBoy_XD
-
-# the logging things
-import logging
-logging.basicConfig(level=logging.DEBUG,
-                    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-logger = logging.getLogger(__name__)
+# @LegendBoy_XD
 
 import os
 import time
 import shutil
+import logging
+import pyrogram
+# the logging things
+from PIL import Image
+from translation import Translation
+from hachoir.parser import createParser
+from hachoir.metadata import extractMetadata
+from helper_funcs.ran_text import random_char
+from helper_funcs.display_progress import progress_for_pyrogram
+
+
+logging.basicConfig(
+    level=logging.DEBUG, format="%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+)
+logger = logging.getLogger(__name__)
+
 
 # the secret configuration specific things
 if bool(os.environ.get("WEBHOOK", False)):
@@ -19,62 +29,51 @@ else:
     from config import Config
 
 # the Strings used for this "thing"
-from translation import Translation
 
-import pyrogram
 logging.getLogger("pyrogram").setLevel(logging.WARNING)
 
-from helper_funcs.display_progress import progress_for_pyrogram
-from helper_funcs.ran_text import random_char
 
-from hachoir.metadata import extractMetadata
-from hachoir.parser import createParser
 # https://stackoverflow.com/a/37631799/4723940
-from PIL import Image
 
 
 @pyrogram.Client.on_message(pyrogram.filters.command(["c2f"]))
 async def convert_to_audio(bot, update):
     if update.from_user.id not in Config.AUTH_USERS:
         await bot.delete_messages(
-            chat_id=update.chat.id,
-            message_ids=update.message_id,
-            revoke=True
+            chat_id=update.chat.id, message_ids=update.message_id, revoke=True
         )
         return
-    if (update.reply_to_message is not None) and (update.reply_to_message.media is not None) :
+    if (update.reply_to_message is not None) and (
+        update.reply_to_message.media is not None
+    ):
         rn2 = random_char(5)
         download_location = Config.DOWNLOAD_LOCATION + "/" + rn2 + "/"
         a = await bot.send_message(
             chat_id=update.chat.id,
             text=Translation.DOWNLOAD_FILE,
-            reply_to_message_id=update.message_id
+            reply_to_message_id=update.message_id,
         )
         c_time = time.time()
         the_real_download_location = await bot.download_media(
             message=update.reply_to_message,
             file_name=download_location,
             progress=progress_for_pyrogram,
-            progress_args=(
-                Translation.DOWNLOAD_FILE,
-                a,
-                c_time
-            )
+            progress_args=(Translation.DOWNLOAD_FILE, a, c_time),
         )
         if the_real_download_location is not None:
             await bot.edit_message_text(
                 text=Translation.SAVED_RECVD_DOC_FILE,
                 chat_id=update.chat.id,
-                message_id=a.message_id
+                message_id=a.message_id,
             )
             # don't care about the extension
             # convert video to audio format
             audio_file_location_path = the_real_download_location
             await a.delete()
             up = await bot.send_message(
-            chat_id=update.chat.id,
-            text=Translation.UPLOAD_START,
-            reply_to_message_id=update.message_id
+                chat_id=update.chat.id,
+                text=Translation.UPLOAD_START,
+                reply_to_message_id=update.message_id,
             )
             logger.info(the_real_download_location)
             # get the correct width, height, and duration for videos greater than 10MB
@@ -84,8 +83,10 @@ async def convert_to_audio(bot, update):
             duration = 0
             metadata = extractMetadata(createParser(the_real_download_location))
             if metadata.has("duration"):
-                duration = metadata.get('duration').seconds
-            thumb_image_path = Config.DOWNLOAD_LOCATION + "/" + str(update.from_user.id) + ".jpg"
+                duration = metadata.get("duration").seconds
+            thumb_image_path = (
+                Config.DOWNLOAD_LOCATION + "/" + str(update.from_user.id) + ".jpg"
+            )
             if not os.path.exists(thumb_image_path):
                 thumb_image_path = None
             else:
@@ -117,28 +118,24 @@ async def convert_to_audio(bot, update):
                 thumb=thumb_image_path,
                 reply_to_message_id=update.reply_to_message.message_id,
                 progress=progress_for_pyrogram,
-                progress_args=(
-                    Translation.UPLOAD_START,
-                    up, 
-                    c_time
-                )
+                progress_args=(Translation.UPLOAD_START, up, c_time),
             )
             try:
                 os.remove(thumb_image_path)
                 os.remove(the_real_download_location)
                 os.remove(audio_file_location_path)
                 shutil.rmtree(download_location)
-            except:
+            except BaseException:
                 pass
             await bot.edit_message_text(
                 text=Translation.AFTER_SUCCESSFUL_UPLOAD_MSG,
                 chat_id=update.chat.id,
                 message_id=up.message_id,
-                disable_web_page_preview=True
+                disable_web_page_preview=True,
             )
     else:
         await bot.send_message(
             chat_id=update.chat.id,
             text=Translation.REPLY_TO_DOC_FOR_C2V,
-            reply_to_message_id=update.message_id
+            reply_to_message_id=update.message_id,
         )

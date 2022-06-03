@@ -1,15 +1,18 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-#@LegendBoy_XD
-
-# the logging things
-import logging
-logging.basicConfig(level=logging.DEBUG,
-                    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-logger = logging.getLogger(__name__)
+# @LegendBoy_XD
 
 import os
+import logging
+# the logging things
 import requests
+
+
+logging.basicConfig(
+    level=logging.DEBUG, format="%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+)
+logger = logging.getLogger(__name__)
+
 
 def DetectFileSize(url):
     r = requests.get(url, allow_redirects=True, stream=True)
@@ -26,7 +29,7 @@ def DownLoadFile(url, file_name, chunk_size, client, ud_type, message_id, chat_i
     # https://stackoverflow.com/a/47342052/4723940
     total_size = int(r.headers.get("content-length", 0))
     downloaded_size = 0
-    with open(file_name, 'wb') as fd:
+    with open(file_name, "wb") as fd:
         for chunk in r.iter_content(chunk_size=chunk_size):
             if chunk:
                 fd.write(chunk)
@@ -41,9 +44,9 @@ def DownLoadFile(url, file_name, chunk_size, client, ud_type, message_id, chat_i
                             text="{}: {} of {}".format(
                                 ud_type,
                                 humanbytes(downloaded_size),
-                                humanbytes(total_size)
-                            )
+                                humanbytes(total_size),
+                            ),
                         )
-                    except:
+                    except BaseException:
                         pass
     return file_name
