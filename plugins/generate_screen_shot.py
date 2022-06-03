@@ -33,12 +33,10 @@ logging.getLogger("pyrogram").setLevel(logging.WARNING)
 @pyrogram.Client.on_message(pyrogram.filters.command(["sshot"]))
 async def generate_screen_shot(bot, update):
     if update.from_user.id not in Config.AUTH_USERS:
-        await bot.send_message(
+        await bot.send_messages(
             chat_id=update.chat.id,
-            text=f"◽ Sorry U Are Not My Master Contact @LegendBoy_XD",
-        )
-        await bot.delete_messages(
-            chat_id=update.chat.id, message_ids=update.message_id, revoke=True
+            text="Buy The Subscriptions From @LegendBoy_XD To Use This Command",
+            reply_to_message_id=update.message_id,
         )
         return
     if update.reply_to_message is not None:
@@ -89,7 +87,7 @@ async def generate_screen_shot(bot, update):
             media_album_p = []
             if images is not None:
                 i = 0
-                caption = "Join : @LegendBot_AI"
+                caption = "Join : @Lakshyajee2pw"
                 for image in images:
                     if os.path.exists(image):
                         if i == 0:
