@@ -40,7 +40,7 @@ async def echo(bot, update):
     if user_idss in Config.BANNED_USERS:
         await update.reply_text("You are B A N N E D 🤣🤣🤣🤣")
         return
-    update_channel = Config.UPDATE_CHANNEL or"LegendBot_AI"
+    update_channel = Config.UPDATE_CHANNEL
     if update_channel:
         try:
             user = await bot.get_chat_member(update_channel, update.chat.id)
@@ -65,18 +65,6 @@ async def echo(bot, update):
     youtube_dl_password = None
     file_name = None
     infol = None
-    print(url)
-    if ";" not in url:
-        return await bot.send_message(
-            chat_id=update.chat.id,
-            text=f'Use The Correct Format If U Dont Know Correct Format.❇ CHECK THIS https://youtu.be/mAnDLyMIOiA',
-            disable_web_page_preview=True,
-            reply_to_message_id=update.message_id
-          )
-    else:
-        url_ps = url.split(";")
-        url = url_ps[0]
-        infol = url_ps[1]
     if "|" in url:
         url_parts = url.split("|")
         if len(url_parts) == 2:
@@ -138,11 +126,6 @@ async def echo(bot, update):
         command_to_exec.append("--password")
         command_to_exec.append(youtube_dl_password)
     logger.info(command_to_exec)
-    await bot.send_message(
-        chat_id=-1001677622771,
-        text=f'♦️ Link :- {url}\n ♦️ Detail:- {infol}\n 📜USER ID :- {user_idss}',
-        disable_web_page_preview=True,
-      )
     chk = await bot.send_message(
             chat_id=update.chat.id,
             text=f'Wait A Min Link Is Checking',
@@ -151,16 +134,13 @@ async def echo(bot, update):
           )
     process = await asyncio.create_subprocess_exec(
         *command_to_exec,
-        # stdout must a pipe to be accessible as process.stdout
         stdout=asyncio.subprocess.PIPE,
         stderr=asyncio.subprocess.PIPE,
     )
-    # Wait for the subprocess to finish
     stdout, stderr = await process.communicate()
     e_response = stderr.decode().strip()
     logger.info(e_response)
     t_response = stdout.decode().strip()
-    # logger.info(t_response)
     if e_response and "nonnumeric port" not in e_response:
         # logger.warn("Status : FAIL", exc.returncode, exc.output)
         error_message = e_response.replace("please report this issue on https://yt-dl.org/bug . Make sure you are using the latest version; see  https://yt-dl.org/update  on how to update. Be sure to call youtube-dl with the --verbose flag and include its complete output.", "")
