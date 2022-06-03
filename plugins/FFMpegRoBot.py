@@ -31,7 +31,7 @@ else:
 logging.getLogger("pyrogram").setLevel(logging.WARNING)
 
 
-@pyrogram.Client.on_message(pyrogram.filters.command(["ffmpegrobot"]))
+@pyrogram.Client.on_message(pyrogram.filters.command(["info"]))
 async def ffmpegrobot_ad(bot, update):
     if update.from_user.id not in Config.AUTH_USERS:
         await bot.delete_messages(
@@ -40,7 +40,7 @@ async def ffmpegrobot_ad(bot, update):
         return
     await bot.send_message(
         chat_id=update.chat.id,
-        text=Translation.FF_MPEG_RO_BOT_AD_VER_TISE_MENT,
+        text=Translation.INFO,
         disable_web_page_preview=True,
         reply_to_message_id=update.message_id,
     )
