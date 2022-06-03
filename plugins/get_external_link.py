@@ -36,11 +36,13 @@ else:
 logging.getLogger("pyrogram").setLevel(logging.WARNING)
 
 
-@pyrogram.Client.on_message(pyrogram.filters.command(["getlink3"]))
+@pyrogram.Client.on_message(pyrogram.filters.command(["getlink"]))
 async def get_link(bot, update):
     if update.from_user.id not in Config.AUTH_USERS:
-        await bot.delete_messages(
-            chat_id=update.chat.id, message_ids=update.message_id, revoke=True
+        await bot.send_messages(
+            chat_id=update.chat.id,
+            text="Buy The Subscriptions From @LegendBoy_XD To Use This Command",
+            reply_to_message_id=update.message_id,
         )
         return
     logger.info(update.from_user)
@@ -61,16 +63,10 @@ async def get_link(bot, update):
             progress=progress_for_pyrogram,
             progress_args=(Translation.DOWNLOAD_FILE, a, c_time),
         )
-
         download_extension = after_download_file_name.rsplit(".", 1)[-1]
         download_file_name_1 = after_download_file_name.rsplit("/", 1)[-1]
         download_file_name = download_file_name_1.rsplit(".", 1)[0]
         s0ze = os.path.getsize(after_download_file_name)
-        """await bot.edit_message_text(
-            text=Translation.SAVED_RECVD_DOC_FILE,
-            chat_id=update.chat.id,
-            message_id=a.message_id
-        )"""
         # stick = await bot.send_sticker(chat_id = update.chat.id,
         # reply_to_message_id = a.message_id,
         # "CAACAgIAAxkBAAELnYFhNIkkeemUQ-gAAd56JPvwIHkOu78AAiQLAAIvD_AGcmqdwLNkEucgBA")
