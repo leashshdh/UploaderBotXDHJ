@@ -8,7 +8,7 @@ class Translation(object):
 │
 ├🔹📚 **Library:** [Pyrogram](https://docs.pyrogram.org)
 │
-├🔹📡 **Hosted On:** [Heroku](https://heroku.com) 
+├🔹📡 **Hosted On:** [Heroku](https://heroku.com)
 │
 ├🔹👥 **Bot Support:** [Support](https://t.me/LegendBot_OP)
 │
@@ -41,7 +41,9 @@ class Translation(object):
 
     DOWNLOAD_FILE = "📥DownloadinG📥 File Wait A Few Minute"
 
-    REPLY_TO_DOC_FOR_C2V = "Reply to a Telegram File Media to convert Supporting Stream Media"
+    REPLY_TO_DOC_FOR_C2V = (
+        "Reply to a Telegram File Media to convert Supporting Stream Media"
+    )
 
     CUSTOM_CAPTION_UL_FILE = " "
 
@@ -55,11 +57,15 @@ class Translation(object):
 
     RCHD_TG_API_LIMIT = "Downloaded in {} seconds.\nDetected File Size: {}\nSorry. But, I cannot upload files greater than 2GB due to Telegram API limitations."
 
-    AFTER_SUCCESSFUL_UPLOAD_MSG_WITH_TS = "Downloaded in {} Seconds.\n\nUploaded in {} Seconds."
+    AFTER_SUCCESSFUL_UPLOAD_MSG_WITH_TS = (
+        "Downloaded in {} Seconds.\n\nUploaded in {} Seconds."
+    )
 
     REPLY_TO_DOC_FOR_SCSS = "Reply to a Telegram media to get Screenshots"
 
-    GO_FILE_UPLOAD = "📤UploadinG📤 \n\n To  gofile.io \nPlease Wait 5-6 Min According to Size"
+    GO_FILE_UPLOAD = (
+        "📤UploadinG📤 \n\n To  gofile.io \nPlease Wait 5-6 Min According to Size"
+    )
 
     AFTER_GET_GOFILE_LINK = " <b>File Name :</b> <code>{}</code>\n<b>File Size :</b> {}\n<b>File MD5 Checksum :</b> <code>{}</code>\n\n<b>⚡Link⚡ :</b> <code>{}</code>\n\n Valid untill 10 days of inactivity\nJoin : @LegendBot_AI"
 
@@ -67,18 +73,18 @@ class Translation(object):
 
     FILE_NOT_FOUND = "Error, File not Found!!"
 
-    HELP_USER = """This Id Advanced Features Bot 
-**CMD** - /info 
+    HELP_USER = """This Id Advanced Features Bot
+**CMD** - /info
 **INFO** - To Know About Developer & About This Bot
 
 **CMD** - /downloadmedia
 **INFO** - This Is Used To Download Media Then Trim Your Video
 **USE** - /downloadmedia <reply to video>
 
-**CMD** - /cleardownloadmedia 
-**INFO** - This Is Used To Clear Download Video then U From Bot Database 
+**CMD** - /cleardownloadmedia
+**INFO** - This Is Used To Clear Download Video then U From Bot Database
 
-**CMD** - /storageinfo 
+**CMD** - /storageinfo
 **INFO** - This Is Used to check downloaded video in your database
 **USE** -
 
@@ -118,10 +124,10 @@ __NOTE__ - Send Me Sticker To Convert Into File Or Pic
 **USE** - /getlink <reply to media>
 
 **CMD** - /help
-**INFO** - To See All Command 
+**INFO** - To See All Command
 
-**CMD** - /rename 
-**INFO** - To Rename telegram media with custom Thumbnail 
+**CMD** - /rename
+**INFO** - To Rename telegram media with custom Thumbnail
 **USE** - /rename <file name > <reply to video >
 
 **CMD** - /server
@@ -131,26 +137,36 @@ __NOTE__ - To Download DRM Protected Video Like Zee5, Hotstar, Amazon, Netflix L
 
     UPGRADE_TEXT = "<b>30rs - One Month</b><b>10rs - 7 Days </b>/help for Details"
 
-    REPLY_TO_DOC_FOR_RENAME_FILE = "Reply to a Telegram media to /rename with custom thumbnail support"
-    
-    EXTRACT_ZIP_INTRO_ONE = "Send a compressed file first, Then reply /unzip command to the file."
-    
-    EXTRACT_ZIP_INTRO_THREE = "Analyzing received file. ⚠️ This might take some time. Please be patient. "
-    
+    REPLY_TO_DOC_FOR_RENAME_FILE = (
+        "Reply to a Telegram media to /rename with custom thumbnail support"
+    )
+
+    EXTRACT_ZIP_INTRO_ONE = (
+        "Send a compressed file first, Then reply /unzip command to the file."
+    )
+
+    EXTRACT_ZIP_INTRO_THREE = (
+        "Analyzing received file. ⚠️ This might take some time. Please be patient. "
+    )
+
     UNZIP_SUPPORTED_EXTENSIONS = ("zip", "rar")
 
     EXTRACT_ZIP_ERRS_OCCURED = "Sorry. Errors occurred while processing compressed file. Please check everything again twice, and if the issue persists, report this to @lakshyajeepw2023freeh"
 
     EXTRACT_ZIP_STEP_TWO = "Select file_name to upload from the below options. \nYou can use /rename command after receiving file to rename it with custom thumbnail support."
 
-    RCHD_BOT_API_LIMIT = "size greater than maximum allowed size (50MB). Neverthless, trying to upload."
-    
+    RCHD_BOT_API_LIMIT = (
+        "size greater than maximum allowed size (50MB). Neverthless, trying to upload."
+    )
+
     IFLONG_FILE_NAME = " Only 64 characters can be named . "
 
-    SET_CUSTOM_USERNAME_PASSWORD = "This Video Is Only For Username & Password By Syntax link username|password"
- 
+    SET_CUSTOM_USERNAME_PASSWORD = (
+        "This Video Is Only For Username & Password By Syntax link username|password"
+    )
+
     NO_VOID_FORMAT_FOUND = "ERROR... {}"
- 
+
     FORMAT_SELECTION = "Choose The Size: <a href='{}'>File size might be approximate</a>.\nS-Video - Support Streaming\nD-Video - File Format "
 
     CURENT_PLAN_DETAILS = "Your Telegram Id - {}\nPlan Type - {}\n Expire - {}"
@@ -166,7 +182,7 @@ JOIN : https://t.me/LegendBot_AI\n\nThanks To @LegendBoy_XD
     RENAME_403_ERR = "Sorry. You are not permitted to rename this file."
 
     ABS_TEXT = " Please don't be selfish."
-   
+
     NOYES_URL = "@robot URL detected. Please use https://shrtz.me/PtsVnf6 and get me a fast URL so that I can upload to Telegram, without me slowing down for other users."
 
     NOT_AUTH_USER_TEXT = "Please /upgrade your subscription."
@@ -198,7 +214,7 @@ Telegram ID : <code>{}</code>
     INVALID_UPLOAD_BOT_URL_FORMAT = "URL format is incorrect. make sure your url starts with either http:// or https://. You can set custom file name using the format link | file_name.extension"
 
     ABUSIVE_USERS = "You are not allowed to use this bot. If you think this is a mistake, please check /me to remove this restriction."
-    
+
     FREE_USER_LIMIT_Q_SZE = """Cannot Process.
 Free users only 1 request per 30 minutes.
 /upgrade or Try 1800 seconds later."""
