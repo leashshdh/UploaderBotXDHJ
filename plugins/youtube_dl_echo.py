@@ -38,9 +38,16 @@ logging.getLogger("pyrogram").setLevel(logging.WARNING)
 
 @pyrogram.Client.on_message(filters.private & filters.regex(pattern=".*http.*"))
 async def echo(bot, update):
+    if update.from_user.id not in Config.AUTH_USERS:
+        await bot.send_messages(
+            chat_id=update.chat.id,
+            text="Buy The Subscriptions From @LegendBoy_XD To Use This Command",
+            reply_to_message_id=update.message_id,
+        )
+        return
     user_idss = update.from_user.id
     if user_idss in Config.BANNED_USERS:
-        await update.reply_text("You are B A N N E D 🤣🤣🤣🤣")
+        await update.reply_text("You are B A N N E D 🤣🤣🤣🤣 Contact @LegendBoy_XD")
         return
     update_channel = Config.UPDATE_CHANNEL
     if update_channel:
@@ -50,7 +57,6 @@ async def echo(bot, update):
                 await update.reply_text("🤭 Sorry Dude, You are **B A N N E D 🤣🤣🤣**")
                 return
         except UserNotParticipant:
-            # await update.reply_text(f"Join @{update_channel} To Use Me")
             await update.reply_text(
                 text="**Join My Updates Channel To Use Me 😎 🤭**",
                 reply_markup=InlineKeyboardMarkup(
