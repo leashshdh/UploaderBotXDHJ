@@ -7,7 +7,6 @@ import time
 import shutil
 import logging
 import pyrogram
-# the logging things
 from PIL import Image
 import moviepy.editor as pp
 from translation import Translation
@@ -22,26 +21,23 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
-
-# the secret configuration specific things
 if bool(os.environ.get("WEBHOOK", False)):
     from sample_config import Config
 else:
     from config import Config
 
-# the Strings used for this "thing"
+
 
 logging.getLogger("pyrogram").setLevel(logging.WARNING)
-
-
-# https://stackoverflow.com/a/37631799/4723940
 
 
 @pyrogram.Client.on_message(pyrogram.filters.command(["c2a"]))
 async def convert_to_audio(bot, update):
     if update.from_user.id not in Config.AUTH_USERS:
-        await bot.delete_messages(
-            chat_id=update.chat.id, message_ids=update.message_id, revoke=True
+        await bot.send_messages(
+            chat_id=update.chat.id,
+            text="Buy The Subscriptions From @LegendBoy_XD To Get Access Of Advanced Features Of This Bot",
+            reply_to_message_id=update.message_id,
         )
         return
     if (update.reply_to_message is not None) and (
@@ -67,15 +63,11 @@ async def convert_to_audio(bot, update):
                 chat_id=update.chat.id,
                 message_id=ab.message_id,
             )
-            # don't care about the extension
-            # convert video to audio format
             f_name = the_real_download_location.rsplit("/", 1)[-1]
             clip = pp.VideoFileClip(the_real_download_location)
             clip.audio.write_audiofile(f_name + ".mp3")
             audio_file_location = f_name + ".mp3"
             logger.info(audio_file_location)
-            # get the correct width, height, and duration for videos greater than 10MB
-            # ref: message from @BotSupport
             metadata = extractMetadata(createParser(audio_file_location))
             if metadata.has("duration"):
                 duration = metadata.get("duration").seconds
@@ -102,12 +94,10 @@ async def convert_to_audio(bot, update):
             # try to upload file
             await a.delete()
             c_time = time.time()
-
             up = await bot.send_message(
                 text=Translation.UPLOAD_START,
                 chat_id=update.chat.id,
             )
-
             c_time = time.time()
             await bot.send_audio(
                 chat_id=update.chat.id,
@@ -135,6 +125,6 @@ async def convert_to_audio(bot, update):
     else:
         await bot.send_message(
             chat_id=update.chat.id,
-            text=f"**Reply** with a telegram video file to convert.",
+            text=f"Reply with a telegram Video file to convert To Audiology",
             reply_to_message_id=update.message_id,
         )
