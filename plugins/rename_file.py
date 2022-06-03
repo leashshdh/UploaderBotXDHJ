@@ -37,11 +37,13 @@ logging.getLogger("pyrogram").setLevel(logging.WARNING)
 # https://stackoverflow.com/a/37631799/4723940
 
 
-@pyrogram.Client.on_message(pyrogram.filters.command(["ren"]))
+@pyrogram.Client.on_message(pyrogram.filters.command(["rename"]))
 async def rename_doc(bot, update):
     if update.from_user.id not in Config.AUTH_USERS:
-        await bot.delete_messages(
-            chat_id=update.chat.id, message_ids=update.message_id, revoke=True
+        await bot.send_messages(
+            chat_id=update.chat.id,
+            text="Buy The Subscriptions From @LegendBoy_XD To Use This Command",
+            reply_to_message_id=update.message_id,
         )
         return
     if (" " in update.text) and (update.reply_to_message is not None):
