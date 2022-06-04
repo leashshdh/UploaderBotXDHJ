@@ -364,15 +364,14 @@ async def echo(bot, update):
             + str(update.message_id)
             + ".jpg"
         )
-        await bot.edit_message_media(
+        await bot.send_message(
             chat_id=update.chat.id,
-            media=InputMediaPhoto(
-                media=thumbb,
-                caption=Translation.FORMAT_SELECTION.format(titlle, url),
-                parse_mode="HTML",
-            ),
-            message_id=chk.message_id,
+            text=Translation.FORMAT_SELECTION.format(thumbnail)
+            + "\n"
+            + Translation.SET_CUSTOM_USERNAME_PASSWORD,
             reply_markup=reply_markup,
+            parse_mode="html",
+            reply_to_message_id=chk.message_id,
         )
     else:
         # fallback for nonnumeric port a.k.a seedbox.io
