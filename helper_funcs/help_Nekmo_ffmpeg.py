@@ -162,7 +162,7 @@ async def generate_screen_shots(
     
     
     
-    async def exa_audio(video_file):
+async def exa_audio(video_file):
     audio_file=video_file.rsplit(".", 1)[0]+".mp3"
     print(audio_file)
     audio_extract=[
