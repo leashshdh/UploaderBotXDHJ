@@ -19,6 +19,10 @@ from helper_funcs.help_uploadbot import DownLoadFile
 from pyrogram.errors import UserNotParticipant, UserBannedInChannel
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 
+from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
+from pyrogram.types import InputMediaPhoto, InputMediaVideo, InputMediaAudio, InputMediaDocument
+from pyrogram import filters
+from pyrogram.errors import UserNotParticipant, UserBannedInChannel
 
 logging.basicConfig(
     level=logging.DEBUG, format="%(asctime)s - %(name)s - %(levelname)s - %(message)s"
@@ -76,12 +80,13 @@ async def echo(bot, update):
                 "Something Wrong. Contact my Support Group :- @LegendBot_OP"
             )
             return
+    idd_m = ' ' + str(update.message_id)
+    no_sz ='N/A' + idd_m
     logger.info(update.from_user)
     url = update.text
     youtube_dl_username = None
     youtube_dl_password = None
     file_name = None
-    infol = None
     if "|" in url:
         url_parts = url.split("|")
         if len(url_parts) == 2:
@@ -126,16 +131,23 @@ async def echo(bot, update):
             "--youtube-skip-dash-manifest",
             "-j",
             url,
-            "--proxy",
-            Config.HTTP_PROXY,
+            "--proxy", Config.HTTP_PROXY
         ]
-    else:
+    elif "/shorts/" in url:
         command_to_exec = [
             "yt-dlp",
             "--no-warnings",
             "--youtube-skip-dash-manifest",
             "-j",
-            url,
+            url
+        ]        
+    else:
+        command_to_exec = [
+            "youtube-dl",
+            "--no-warnings",
+            "--youtube-skip-dash-manifest",
+            "-j",
+            url
         ]
     if youtube_dl_username is not None:
         command_to_exec.append("--username")
@@ -144,12 +156,13 @@ async def echo(bot, update):
         command_to_exec.append("--password")
         command_to_exec.append(youtube_dl_password)
     logger.info(command_to_exec)
-    chk = await bot.send_message(
-        chat_id=update.chat.id,
-        text=f"Wait A Min Link Is Checking",
-        disable_web_page_preview=True,
-        reply_to_message_id=update.message_id,
-    )
+    chk = await bot.send_photo(
+            chat_id=update.chat.id,
+            photo="https://telegra.ph/file/7b9ae974724cff07771e7.jpg",
+            caption=f'Searching on Youtube...🔎',
+            # disable_web_page_preview=True,
+            reply_to_message_id=update.message_id
+          )
     process = await asyncio.create_subprocess_exec(
         *command_to_exec,
         stdout=asyncio.subprocess.PIPE,
@@ -168,7 +181,6 @@ async def echo(bot, update):
         if "This video is only available for registered users." in error_message:
             error_message += Translation.SET_CUSTOM_USERNAME_PASSWORD
         await chk.delete()
-        time.sleep(1)
         await bot.send_message(
             chat_id=update.chat.id,
             text=Translation.NO_VOID_FORMAT_FOUND.format(str(error_message)),
@@ -184,13 +196,11 @@ async def echo(bot, update):
             x_reponse, _ = x_reponse.split("\n")
         response_json = json.loads(x_reponse)
         randem = random_char(5)
-        save_ytdl_json_path = (
-            Config.DOWNLOAD_LOCATION
-            + "/"
-            + str(update.from_user.id)
-            + f"{randem}"
-            + ".json"
-        )
+        os.mkdir(Config.DOWNLOAD_LOCATION + \
+            "/" + str(update.message_id) + "/")
+        save_ytdl_json_path = Config.DOWNLOAD_LOCATION + \
+            "/" + str(update.message_id) + "/" + str(update.from_user.id) + ".json"
+        print(save_ytdl_json_path, "echo")
         with open(save_ytdl_json_path, "w", encoding="utf8") as outfile:
             json.dump(response_json, outfile, ensure_ascii=False)
         # logger.info(response_json)
@@ -305,38 +315,34 @@ async def echo(bot, update):
         # logger.info(reply_markup)
         thumbnail = Config.DEF_THUMB_NAIL_VID_S
         thumbnail_image = Config.DEF_THUMB_NAIL_VID_S
+        if "fulltitle" in response_json:
+            titlle = response_json["fulltitle"][0:1021]
         if "thumbnail" in response_json:
             if response_json["thumbnail"] is not None:
                 thumbnail = response_json["thumbnail"]
                 thumbnail_image = response_json["thumbnail"]
         thumb_image_path = DownLoadFile(
             thumbnail_image,
-            Config.DOWNLOAD_LOCATION
-            + "/"
-            + str(update.from_user.id)
-            + f"{randem}"
-            + ".webp",
+            Config.DOWNLOAD_LOCATION + "/" +
+            str(update.from_user.id) + ' ' + str(update.message_id) + ".webp",
             Config.CHUNK_SIZE,
             None,  # bot,
             Translation.DOWNLOAD_START,
             update.message_id,
-            update.chat.id,
+            update.chat.id
         )
         if os.path.exists(thumb_image_path):
             im = Image.open(thumb_image_path).convert("RGB")
             im.save(thumb_image_path.replace(".webp", ".jpg"), "jpeg")
         else:
             thumb_image_path = None
-        await chk.delete()
-        time.sleep(1)
-        await bot.send_message(
-            chat_id=update.chat.id,
-            text=Translation.FORMAT_SELECTION.format(thumbnail)
-            + "\n"
-            + Translation.SET_CUSTOM_USERNAME_PASSWORD,
-            reply_markup=reply_markup,
-            parse_mode="html",
-            reply_to_message_id=update.message_id,
+        # await chk.delete()
+        thumbb=Config.DOWNLOAD_LOCATION + '/' + str(update.from_user.id) + ' ' + str(update.message_id) + '.jpg'
+        await bot.edit_message_media(
+           chat_id=update.chat.id,
+           media=InputMediaPhoto(media=thumbb, caption=Translation.FORMAT_SELECTION.format(titlle, url), parse_mode="HTML"),
+           message_id=chk.message_id,
+           reply_markup=reply_markup
         )
     else:
         # fallback for nonnumeric port a.k.a seedbox.io
@@ -355,7 +361,7 @@ async def echo(bot, update):
         )
         reply_markup = InlineKeyboardMarkup(inline_keyboard)
         await chk.delete()
-        time.sleep(1)
+        
         await bot.send_message(
             chat_id=update.chat.id,
             text=Translation.FORMAT_SELECTION.format(""),
