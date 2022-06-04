@@ -17,12 +17,10 @@ from helper_funcs.display_progress import humanbytes
 from helper_funcs.help_uploadbot import DownLoadFile
 # the logging things
 from pyrogram.errors import UserNotParticipant, UserBannedInChannel
-from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
+from pyrogram.types import (
+    InputMediaAudio, InputMediaPhoto, InputMediaVideo, InputMediaDocument,
+    InlineKeyboardButton, InlineKeyboardMarkup)
 
-from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
-from pyrogram.types import InputMediaPhoto, InputMediaVideo, InputMediaAudio, InputMediaDocument
-from pyrogram import filters
-from pyrogram.errors import UserNotParticipant, UserBannedInChannel
 
 logging.basicConfig(
     level=logging.DEBUG, format="%(asctime)s - %(name)s - %(levelname)s - %(message)s"
@@ -80,8 +78,8 @@ async def echo(bot, update):
                 "Something Wrong. Contact my Support Group :- @LegendBot_OP"
             )
             return
-    idd_m = ' ' + str(update.message_id)
-    no_sz ='N/A' + idd_m
+    idd_m = " " + str(update.message_id)
+    no_sz = "N/A" + idd_m
     logger.info(update.from_user)
     url = update.text
     youtube_dl_username = None
@@ -131,7 +129,8 @@ async def echo(bot, update):
             "--youtube-skip-dash-manifest",
             "-j",
             url,
-            "--proxy", Config.HTTP_PROXY
+            "--proxy",
+            Config.HTTP_PROXY,
         ]
     elif "/shorts/" in url:
         command_to_exec = [
@@ -139,15 +138,15 @@ async def echo(bot, update):
             "--no-warnings",
             "--youtube-skip-dash-manifest",
             "-j",
-            url
-        ]        
+            url,
+        ]
     else:
         command_to_exec = [
             "youtube-dl",
             "--no-warnings",
             "--youtube-skip-dash-manifest",
             "-j",
-            url
+            url,
         ]
     if youtube_dl_username is not None:
         command_to_exec.append("--username")
@@ -157,12 +156,12 @@ async def echo(bot, update):
         command_to_exec.append(youtube_dl_password)
     logger.info(command_to_exec)
     chk = await bot.send_photo(
-            chat_id=update.chat.id,
-            photo="https://telegra.ph/file/7b9ae974724cff07771e7.jpg",
-            caption=f'Searching on Youtube...🔎',
-            # disable_web_page_preview=True,
-            reply_to_message_id=update.message_id
-          )
+        chat_id=update.chat.id,
+        photo="https://telegra.ph/file/7b9ae974724cff07771e7.jpg",
+        caption=f"Searching on Youtube...🔎",
+        # disable_web_page_preview=True,
+        reply_to_message_id=update.message_id,
+    )
     process = await asyncio.create_subprocess_exec(
         *command_to_exec,
         stdout=asyncio.subprocess.PIPE,
@@ -196,10 +195,15 @@ async def echo(bot, update):
             x_reponse, _ = x_reponse.split("\n")
         response_json = json.loads(x_reponse)
         randem = random_char(5)
-        os.mkdir(Config.DOWNLOAD_LOCATION + \
-            "/" + str(update.message_id) + "/")
-        save_ytdl_json_path = Config.DOWNLOAD_LOCATION + \
-            "/" + str(update.message_id) + "/" + str(update.from_user.id) + ".json"
+        os.mkdir(Config.DOWNLOAD_LOCATION + "/" + str(update.message_id) + "/")
+        save_ytdl_json_path = (
+            Config.DOWNLOAD_LOCATION
+            + "/"
+            + str(update.message_id)
+            + "/"
+            + str(update.from_user.id)
+            + ".json"
+        )
         print(save_ytdl_json_path, "echo")
         with open(save_ytdl_json_path, "w", encoding="utf8") as outfile:
             json.dump(response_json, outfile, ensure_ascii=False)
@@ -323,13 +327,17 @@ async def echo(bot, update):
                 thumbnail_image = response_json["thumbnail"]
         thumb_image_path = DownLoadFile(
             thumbnail_image,
-            Config.DOWNLOAD_LOCATION + "/" +
-            str(update.from_user.id) + ' ' + str(update.message_id) + ".webp",
+            Config.DOWNLOAD_LOCATION
+            + "/"
+            + str(update.from_user.id)
+            + " "
+            + str(update.message_id)
+            + ".webp",
             Config.CHUNK_SIZE,
             None,  # bot,
             Translation.DOWNLOAD_START,
             update.message_id,
-            update.chat.id
+            update.chat.id,
         )
         if os.path.exists(thumb_image_path):
             im = Image.open(thumb_image_path).convert("RGB")
@@ -337,12 +345,23 @@ async def echo(bot, update):
         else:
             thumb_image_path = None
         # await chk.delete()
-        thumbb=Config.DOWNLOAD_LOCATION + '/' + str(update.from_user.id) + ' ' + str(update.message_id) + '.jpg'
+        thumbb = (
+            Config.DOWNLOAD_LOCATION
+            + "/"
+            + str(update.from_user.id)
+            + " "
+            + str(update.message_id)
+            + ".jpg"
+        )
         await bot.edit_message_media(
-           chat_id=update.chat.id,
-           media=InputMediaPhoto(media=thumbb, caption=Translation.FORMAT_SELECTION.format(titlle, url), parse_mode="HTML"),
-           message_id=chk.message_id,
-           reply_markup=reply_markup
+            chat_id=update.chat.id,
+            media=InputMediaPhoto(
+                media=thumbb,
+                caption=Translation.FORMAT_SELECTION.format(titlle, url),
+                parse_mode="HTML",
+            ),
+            message_id=chk.message_id,
+            reply_markup=reply_markup,
         )
     else:
         # fallback for nonnumeric port a.k.a seedbox.io
@@ -361,7 +380,7 @@ async def echo(bot, update):
         )
         reply_markup = InlineKeyboardMarkup(inline_keyboard)
         await chk.delete()
-        
+
         await bot.send_message(
             chat_id=update.chat.id,
             text=Translation.FORMAT_SELECTION.format(""),
