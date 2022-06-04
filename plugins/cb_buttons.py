@@ -189,10 +189,10 @@ async def button(bot, update):
         elif "None" in cb_data:
             await update.answer(f'Downloaded: {siio} of {"N/A"}', show_alert="True")
         else:
-            if int(smze) < int(szze):
+            if smze < szze:
                 await update.answer(f"Downloaded: {siio} of {humanbytes(int(szze))}")
             else:
-                diff = int(smze) - int(szze)
+                diff = smze - szze
                 print(lsst, "video downloaded successfully")
                 await update.answer(
                     f"Video Downloded Successfully: {humanbytes(int(szze))} \n\n Now Downloading audio: {humanbytes(diff)}",
