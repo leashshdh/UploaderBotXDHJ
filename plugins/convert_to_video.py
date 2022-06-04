@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 # @LegendBoy_XD
-
+import random
 import os
 import time
 import shutil
@@ -15,7 +15,7 @@ from hachoir.metadata import extractMetadata
 from helper_funcs.ran_text import random_char
 from helper_funcs.display_progress import progress_for_pyrogram
 
-
+from helper_funcs.help_Nekmo_ffmpeg import take_screen_shot
 logging.basicConfig(
     level=logging.DEBUG, format="%(asctime)s - %(name)s - %(levelname)s - %(message)s"
 )
