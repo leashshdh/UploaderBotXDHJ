@@ -74,65 +74,67 @@ class Translation(object):
     FILE_NOT_FOUND = "Error, File not Found!!"
 
     HELP_USER = """This Id Advanced Features Bot
-**CMD** - /info
-**INFO** - To Know About Developer & About This Bot
+<b>CMD</b> - /info
+<b>INFO</b> - To Know About Developer & About This Bot
 
-**CMD** - /downloadmedia
-**INFO** - This Is Used To Download Media Then Trim Your Video
-**USE** - /downloadmedia <reply to video>
+<b>CMD</b> - /downloadmedia
+<b>INFO</b> - This Is Used To Download Media Then Trim Your Video
+<b>USE</b> - /downloadmedia <reply to video>
 
-**CMD** - /cleardownloadmedia
-**INFO** - This Is Used To Clear Download Video then U From Bot Database
+<b>CMD</b> - /cleardownloadmedia
+<b>INFO</b> - This Is Used To Clear Download Video then U From Bot Database
 
-**CMD** - /storageinfo
-**INFO** - This Is Used to check downloaded video in your database
-**USE** -
+<b>CMD</b> - /storageinfo
+<b>INFO</b> - This Is Used to check downloaded video in your database
 
-**CMD** - /trim
-**INFO** - This is used to trim video from video & Take screenshot when you send specific time
-**USE** - /trim HH:MM:SS HH:MM:SS or /trim HH:MM:SS
+<b>CMD</b> - /trim
+<b>INFO</b> - This is used to trim video from video & Take screenshot when you send specific time
+<b>INFO</b> - /trim HH:MM:SS HH:MM:SS or /trim HH:MM:SS
 
-**CMD** - /c2a
-**INFO** - This Is Used to convert video to audio
-**USE** - /c2a <reply to video>
+<b>CMD</b> - /c2a
+<b>INFO</b> - This Is Used to convert video to audio
+<b>INFO</b> - /c2a <reply to video>
 
-**CMD** - /c2f
-**INFO** - This Is Used To Convert Streaming Video To File Video
-**USE** - /c2f <reply to video>
+<b>CMD</b> - /c2f
+<b>INFO</b> - This Is Used To Convert Streaming Video To File Video
+<b>INFO</b> - /c2f <reply to video>
 
-**CMD** - /c2v
-**INFO** - This Is Used To Convert File Video To Streaming Support Video
-**USE** - /c2f <reply to file video>
+<b>CMD</b> - /c2v
+<b>INFO</b> - This Is Used To Convert File Video To Streaming Support Video
+<b>INFO</b> - /c2f <reply to file video>
 
-**CMD** - /setthumb
-**INFO** - This Is Used to Combine Two Photo
-**USE** - /setthumb <reply to photo> __NOTE__ - Must Contain 2 PIC
+<b>CMD</b> - /setthumb
+<b>INFO</b> - This Is Used to Combine Two Photo
+<b>INFO</b> - /setthumb <reply to photo> __NOTE__ - Must Contain 2 PIC
 
 __NOTE__ - Send Me Img It Automatically Set Into Custom Thumbnail For DRM Protected Video
 
-**CMD** - /delthumb
-**INFO** - To Delete The Custom Thumbnail For DRM Protected Video
+<b>CMD</b> - /delthumb
+<b>INFO</b> - To Delete The Custom Thumbnail For DRM Protected Video
 
 __NOTE__ - Send Me Sticker To Convert Into File Or Pic
 
-**CMD** - /sshot
-**INFO** - To Take Screenshot From Video
-**USE** - /sshot <reply to video>
+<b>CMD</b> - /sshot
+<b>INFO</b> - To Take Screenshot From Video
+<b>INFO</b> - /sshot <reply to video>
 
-**CMD** - /getlink
-**INFO** - To Get Fast Server To Share & Watch Online
-**USE** - /getlink <reply to media>
+<b>CMD</b> - /getlink
+<b>INFO</b> - To Get Fast Server To Share & Watch Online
+<b>INFO</b> - /getlink <reply to media>
 
-**CMD** - /help
-**INFO** - To See All Command
+<b>CMD</b> - /help
+<b>INFO</b> - To See All Command
 
-**CMD** - /rename
-**INFO** - To Rename telegram media with custom Thumbnail
-**USE** - /rename <file name > <reply to video >
+<b>CMD</b> - /rename
+<b>INFO</b> - To Rename telegram media with custom Thumbnail
+<b>INFO</b> - /rename <file name > <reply to video >
 
-**CMD** - /server
-**INFO** - To know about server ram, speed , uptime
+<b>CMD</b> - /server
+<b>INFO</b> - To know about server ram, speed , uptime
 
+<b>CMD</b> - /playlist
+<b>INFO</b> - To Download Playlist Of Youtube Link
+<b>USE</b> - /playlist <playlist Link>
 __NOTE__ - To Download DRM Protected Video Like Zee5, Hotstar, Amazon, Netflix Like Video & YouTube Video """
 
     UPGRADE_TEXT = "<b>30rs - One Month</b><b>10rs - 7 Days </b>/help for Details"
