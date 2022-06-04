@@ -22,7 +22,7 @@ import time
 from speedtest import Speedtest
 from helper_funcs.display_progress import humanbytes
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
-from pyrogram import StopPropagation, Client, 
+from pyrogram import StopPropagation, Client
 
 
 logging.basicConfig(
