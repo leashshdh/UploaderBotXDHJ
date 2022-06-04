@@ -3,8 +3,8 @@
 # @LegendBoy_XD
 
 import os
-import random
 import time
+import random
 import logging
 import pyrogram
 from translation import Translation
@@ -13,8 +13,9 @@ from hachoir.parser import createParser
 from hachoir.metadata import extractMetadata
 from helper_funcs.display_progress import progress_for_pyrogram
 from helper_funcs.help_Nekmo_ffmpeg import cult_small_video, take_screen_shot
-from pyrogram.types import CallbackQuery, InlineKeyboardButton, InlineKeyboardMarkup
-from pyrogram.types import InputMediaPhoto, InputMediaVideo, InputMediaAudio, InputMediaDocument
+from pyrogram.types import (
+    CallbackQuery, InputMediaAudio, InputMediaPhoto, InputMediaVideo,
+    InputMediaDocument, InlineKeyboardButton, InlineKeyboardMarkup)
 
 
 logging.basicConfig(
@@ -60,38 +61,37 @@ async def trim(bot, update):
             reply_to_message_id=update.message_id,
         )
         return
-    saved_file_path = Config.DOWNLOAD_LOCATION + "/" + str(update.from_user.id) + ".FFMpegRoBot.mkv"
+    saved_file_path = (
+        Config.DOWNLOAD_LOCATION + "/" + str(update.from_user.id) + ".FFMpegRoBot.mkv"
+    )
     if os.path.exists(saved_file_path):
         a = await bot.send_message(
             chat_id=update.chat.id,
             text=Translation.DOWNLOAD_START,
-            reply_to_message_id=update.message_id
+            reply_to_message_id=update.message_id,
         )
         commands = update.command
         if len(commands) == 3:
             # output should be video
             cmd, start_time, end_time = commands
-            o = await cult_small_video(saved_file_path, Config.DOWNLOAD_LOCATION, start_time, end_time)
+            o = await cult_small_video(
+                saved_file_path, Config.DOWNLOAD_LOCATION, start_time, end_time
+            )
             logger.info(o)
             if o is not None:
                 await bot.edit_message_text(
                     chat_id=update.chat.id,
                     text=Translation.UPLOAD_START,
-                    message_id=a.message_id
+                    message_id=a.message_id,
                 )
                 metadata = extractMetadata(createParser(o))
                 print("metedata ::", metadata, "::Metadata")
                 duration = None
                 if metadata.has("duration"):
-                    duration = metadata.get('duration').seconds
+                    duration = metadata.get("duration").seconds
                     print(duration)
                 thumb_image_path = await take_screen_shot(
-                    o,
-                    os.path.dirname(o),
-                    random.randint(
-                        0,
-                        duration - 2
-                    )
+                    o, os.path.dirname(o), random.randint(0, duration - 2)
                 )
                 c_time = time.time()
                 await bot.send_video(
@@ -106,18 +106,14 @@ async def trim(bot, update):
                     thumb=thumb_image_path,
                     reply_to_message_id=update.message_id,
                     progress=progress_for_pyrogram,
-                    progress_args=(
-                        Translation.UPLOAD_START,
-                        a,
-                        c_time
-                    )
+                    progress_args=(Translation.UPLOAD_START, a, c_time),
                 )
                 os.remove(o)
                 await bot.edit_message_text(
                     chat_id=update.chat.id,
                     text=Translation.AFTER_SUCCESSFUL_UPLOAD_MSG,
                     disable_web_page_preview=True,
-                    message_id=a.message_id
+                    message_id=a.message_id,
                 )
         elif len(commands) == 2:
             # output should be screenshot
@@ -242,7 +238,7 @@ async def download_media(bot, update):
         a = await bot.send_message(
             chat_id=update.chat.id,
             text=Translation.DOWNLOAD_START,
-            reply_to_message_id=update.message_id
+            reply_to_message_id=update.message_id,
         )
         try:
             c_time = time.time()
@@ -250,30 +246,26 @@ async def download_media(bot, update):
                 message=update.reply_to_message,
                 file_name=saved_file_path,
                 progress=progress_for_pyrogram,
-                progress_args=(
-                    Translation.DOWNLOAD_START,
-                    a,
-                    c_time
-                )
+                progress_args=(Translation.DOWNLOAD_START, a, c_time),
             )
         except (ValueError) as e:
             await bot.edit_message_text(
-                chat_id=update.chat.id,
-                text=str(e),
-                message_id=a.message_id
+                chat_id=update.chat.id, text=str(e), message_id=a.message_id
             )
         else:
             await bot.edit_message_text(
                 chat_id=update.chat.id,
                 text=Translation.SAVED_RECVD_DOC_FILE,
-                message_id=a.message_id
+                message_id=a.message_id,
             )
     else:
-        IM = [InlineKeyboardButton("Yes!", callback_data="DelMedia"),
-              InlineKeyboardButton("No", callback_data="NO-delM")]
+        IM = [
+            InlineKeyboardButton("Yes!", callback_data="DelMedia"),
+            InlineKeyboardButton("No", callback_data="NO-delM"),
+        ]
         await bot.send_message(
             chat_id=update.chat.id,
             text=Translation.FF_MPEG_RO_BOT_STOR_AGE_ALREADY_EXISTS,
             reply_to_message_id=update.message_id,
-            reply_markup=IM
+            reply_markup=IM,
         )

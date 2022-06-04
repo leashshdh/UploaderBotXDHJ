@@ -159,20 +159,12 @@ async def generate_screen_shots(
         return images
     else:
         return None
-    
-    
-    
+
+
 async def exa_audio(video_file):
-    audio_file=video_file.rsplit(".", 1)[0]+".mp3"
+    audio_file = video_file.rsplit(".", 1)[0] + ".mp3"
     print(audio_file)
-    audio_extract=[
-        "ffmpeg",
-        "-i",
-        video_file,
-        "-acodec",
-        "copy",
-        audio_file
-    ]
+    audio_extract = ["ffmpeg", "-i", video_file, "-acodec", "copy", audio_file]
     process = await asyncio.create_subprocess_exec(
         *audio_extract,
         # stdout must a pipe to be accessible as process.stdout
@@ -188,5 +180,3 @@ async def exa_audio(video_file):
         return audio_file
     else:
         return None
-    
-    
