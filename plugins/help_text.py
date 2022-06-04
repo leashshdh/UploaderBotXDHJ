@@ -1,28 +1,22 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 # @LegendBoy_XD
+import os
 import time
 import psutil
-from pyrogram import Client, StopPropagation, filters
-from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
-bot_start_time = time.time()
-import os
+import shutil
 import logging
 import sqlite3
 import pyrogram
+from speedtest import Speedtest
 from translation import Translation
-# the logging things
-from pyrogram import StopPropagation
-from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
-from speedtest import Speedtest
-import os
-import sqlite3
-import psutil, shutil
-import time
-from speedtest import Speedtest
 from helper_funcs.display_progress import humanbytes
+from pyrogram import Client, StopPropagation, filters
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
-from pyrogram import StopPropagation, Client
+
+
+bot_start_time = time.time()
+# the logging things
 
 
 logging.basicConfig(
@@ -87,14 +81,15 @@ async def upgrade(bot, update):
 
 @Client.on_message(filters.command(["server"]))
 async def start(bot, update):
-    bot_uptime = time.strftime("%Hh %Mm %Ss", time.gmtime(time.time() - bot_start_time)) 
-    joinButton = InlineKeyboardMarkup([
-        [InlineKeyboardButton("JOIN", url="https://t.me/TGBotsCollection")],
-        [InlineKeyboardButton(
-            "Try", url="https://t.me/TGBotsCollectionbot")]
-    ])
+    bot_uptime = time.strftime("%Hh %Mm %Ss", time.gmtime(time.time() - bot_start_time))
+    joinButton = InlineKeyboardMarkup(
+        [
+            [InlineKeyboardButton("JOIN", url="https://t.me/TGBotsCollection")],
+            [InlineKeyboardButton("Try", url="https://t.me/TGBotsCollectionbot")],
+        ]
+    )
     # https://git.io/Jye7k
-    total, used, free = shutil.disk_usage('.')
+    total, used, free = shutil.disk_usage(".")
     total = humanbytes(total)
     used = humanbytes(used)
     free = humanbytes(free)
@@ -103,16 +98,18 @@ async def start(bot, update):
     cpuUsage = psutil.cpu_percent(interval=0.5)
     print(total, used, free, sent, recv)
     memory = psutil.virtual_memory().percent
-    disk = psutil.disk_usage('/').percent
-    botstats = f'<b>Bot Uptime:</b> {bot_uptime}\n' \
-              f'<b>Total disk space:</b> {total}\n' \
-              f'<b>Used:</b> {used}  ' \
-              f'<b>Free:</b> {free}\n\n' \
-              f'📊Data Usage📊\n<b>Upload:</b> {sent}\n' \
-              f'<b>Down:</b> {recv}\n\n' \
-              f'<b>CPU:</b> {cpuUsage}% ' \
-              f'<b>RAM:</b> {memory}% ' \
-              f'<b>Disk:</b> {disk}%'
+    disk = psutil.disk_usage("/").percent
+    botstats = (
+        f"<b>Bot Uptime:</b> {bot_uptime}\n"
+        f"<b>Total disk space:</b> {total}\n"
+        f"<b>Used:</b> {used}  "
+        f"<b>Free:</b> {free}\n\n"
+        f"📊Data Usage📊\n<b>Upload:</b> {sent}\n"
+        f"<b>Down:</b> {recv}\n\n"
+        f"<b>CPU:</b> {cpuUsage}% "
+        f"<b>RAM:</b> {memory}% "
+        f"<b>Disk:</b> {disk}%"
+    )
     await update.reply_text(botstats, reply_markup=joinButton)
 
 
@@ -123,51 +120,54 @@ async def speed(bot, update):
     except Exception as er:
         print(er, 13)
         spg = await bot.send_message(
-            text=f'Running speedtest....',
+            text=f"Running speedtest....",
             chat_id=update.message.chat.id,
             reply_to_message_id=update.message.message_id,
         )
-    
+
     test = Speedtest()
     test.get_best_server()
     test.download()
     test.upload()
     test.results.share()
     result = test.results.dict()
-    path = (result['share'])
+    path = result["share"]
     try:
-        print('Line 28', test)
+        print("Line 28", test)
     except Exception as ere:
-        print(ere, '30')
+        print(ere, "30")
         pass
-    string_speed = f'''
+    string_speed = f"""
 <b>Server</b>
 <b>Name:</b> <code>{result['server']['name']}</code>
 <b>Country:</b> <code>{result['server']['country']}, {result['server']['cc']}</code>
 <b>Sponsor:</b> <code>{result['server']['sponsor']}</code>
-    
+
 <a href="{path}"><b>SpeedTest Results</b></a>
 <b>Upload:</b> <code>{speed_convert(result['upload'] / 8)}</code>
 <b>Download:</b>  <code>{speed_convert(result['download'] / 8)}</code>
 <b>Ping:</b> <code>{result['ping']} ms</code>
 <b>ISP:</b> <code>{result['client']['isp']}</code>
-'''
+"""
 
     await spg.delete()
     try:
         print(path, result)
     except Exception as pri:
         print(pri)
-        
+
     try:
         await update.reply_photo(path, caption=string_speed, parse_mode="HTML")
     except Exception as cv:
         print("Error 60 ", cv)
-        await update.reply_text(string_speed, parse_mode="HTML", disable_web_page_preview=True)
-        
+        await update.reply_text(
+            string_speed, parse_mode="HTML", disable_web_page_preview=True
+        )
+
+
 def speed_convert(size):
     """Hi human, you can't read bytes?"""
-    power = 2 ** 10
+    power = 2**10
     zero = 0
     units = {0: "", 1: "Kb/s", 2: "MB/s", 3: "Gb/s", 4: "Tb/s"}
     while size > power:
