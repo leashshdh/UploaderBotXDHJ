@@ -140,7 +140,7 @@ async def button(bot, update):
             )
         except Exception as fc:
             print(fc)
-    elif "NO-delM" in cd_data:
+    elif "NO-delM" in cb_data:
         await bot.edit_message_text(
             chat_id=update.message.chat.id,
             message_id=update.message.message_id,
