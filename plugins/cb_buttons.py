@@ -200,6 +200,6 @@ async def button(bot, update):
                 )
         else:
             try:
-                await update.answer(f"Downloaded: {siio} Please Wait Patiently", show_alert="True)
+                await update.answer(f"Downloaded: {siio} Please Wait Patiently", show_alert="True")
             except BaseException:
                 pass
