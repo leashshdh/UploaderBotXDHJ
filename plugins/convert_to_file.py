@@ -65,7 +65,7 @@ async def convert_to_audio(bot, update):
             await bot.edit_message_text(
                 text=Translation.SAVED_RECVD_DOC_FILE,
                 chat_id=update.chat.id,
-                message_id=a.message_id
+                message_id=a.message_id,
             )
         else:
             # don't care about the extension
@@ -75,14 +75,16 @@ async def convert_to_audio(bot, update):
             await bot.edit_message_text(
                 chat_id=update.chat.id,
                 text=Translation.UPLOAD_START,
-                message_id=a.message_id
+                message_id=a.message_id,
             )
             logger.info(the_real_download_location)
-            caption=the_real_download_location.rsplit("/", 1)[1]
-            caption=caption.rsplit(".", 1)[0]
+            caption = the_real_download_location.rsplit("/", 1)[1]
+            caption = caption.rsplit(".", 1)[0]
             # get the correct width, height, and duration for videos greater than 10MB
             # ref: message from @BotSupport
-            thumb_image_path = Config.DOWNLOAD_LOCATION + "/" + str(update.from_user.id) + "_" + ".jpg"
+            thumb_image_path = (
+                Config.DOWNLOAD_LOCATION + "/" + str(update.from_user.id) + "_" + ".jpg"
+            )
             if not os.path.exists(thumb_image_path):
                 thumb_image_path = None
             else:
@@ -114,26 +116,21 @@ async def convert_to_audio(bot, update):
                 thumb=thumb_image_path,
                 reply_to_message_id=update.reply_to_message.message_id,
                 progress=progress_for_pyrogram,
-                progress_args=(
-                    Translation.UPLOAD_START,
-                    a, 
-                    c_time
-                )
+                progress_args=(Translation.UPLOAD_START, a, c_time),
             )
             try:
                 # os.remove(thumb_image_path)
                 # os.remove(the_real_download_location)
                 # os.remove(audio_file_location_path)
                 shutil.rmtree(download_location)
-            except:
+            except BaseException:
                 pass
             await bot.edit_message_text(
                 text=Translation.AFTER_SUCCESSFUL_UPLOAD_MSG,
                 chat_id=update.chat.id,
                 message_id=a.message_id,
-                disable_web_page_preview=True
+                disable_web_page_preview=True,
             )
-            
 
     else:
         await bot.send_message(
