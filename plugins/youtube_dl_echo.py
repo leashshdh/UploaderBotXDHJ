@@ -155,11 +155,10 @@ async def echo(bot, update):
         command_to_exec.append("--password")
         command_to_exec.append(youtube_dl_password)
     logger.info(command_to_exec)
-    chk = await bot.send_photo(
+    chk = await bot.send_message(
         chat_id=update.chat.id,
-        photo="https://telegra.ph/file/7b9ae974724cff07771e7.jpg",
-        caption=f"Searching on Youtube...🔎",
-        # disable_web_page_preview=True,
+        text=f"Wait A Min Link Is Checking",
+        disable_web_page_preview=True,
         reply_to_message_id=update.message_id,
     )
     process = await asyncio.create_subprocess_exec(
@@ -364,6 +363,7 @@ async def echo(bot, update):
             + str(update.message_id)
             + ".jpg"
         )
+        await chk.delete()
         await bot.send_message(
             chat_id=update.chat.id,
             text=Translation.FORMAT_SELECTION.format(thumbnail)
@@ -371,7 +371,7 @@ async def echo(bot, update):
             + Translation.SET_CUSTOM_USERNAME_PASSWORD,
             reply_markup=reply_markup,
             parse_mode="html",
-            reply_to_message_id=chk.message_id,
+            reply_to_message_id=update.message_id,
         )
     else:
         # fallback for nonnumeric port a.k.a seedbox.io
