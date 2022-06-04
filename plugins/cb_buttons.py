@@ -207,5 +207,3 @@ async def button(bot, update):
                 )
             except BaseException:
                 pass
-
-            
