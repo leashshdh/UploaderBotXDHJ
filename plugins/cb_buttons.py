@@ -181,12 +181,12 @@ async def button(bot, update):
                 await update.answer("Video, audio downloaded sucessfully. \n\n Upload starts soon.", show_alert="True")"""
         elif len(lsst) - vtt == 4:
             await update.answer(
-                "Video & Audio downloaded sucessfully\n\nUploading starts soon. . ."
+                "Video & Audio downloaded sucessfully\n\nUploading starts soon. . .", show_alert="True"
             )
         elif "N/A" in cb_data:
-            await update.answer(f'Downloaded: {siio} of {"N/A"}')
+            await update.answer(f'Downloaded: {siio} of {"N/A"}', show_alert="True")
         elif "None" in cb_data:
-            await update.answer(f'Downloaded: {siio} of {"N/A"}')
+            await update.answer(f'Downloaded: {siio} of {"N/A"}', show_alert="True")
         else:
             if int(smze) < int(szze):
                 await update.answer(f"Downloaded: {siio} of {humanbytes(int(szze))}")
