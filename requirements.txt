@@ -12,4 +12,8 @@ youtube-dl
 yt-dlp
 olefile
 speedtest-cli
+filetype
+tldextract
 motor
+aiofiles
+dnspython
