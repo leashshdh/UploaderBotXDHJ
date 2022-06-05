@@ -18,13 +18,14 @@ from hachoir.metadata import extractMetadata
 # the logging things
 from helper_funcs.ran_text import random_char
 from helper_funcs.help_uploadbot import DownLoadFile
+from plugins.custom_thumbnail import Gthumb01, Gthumb02
 from helper_funcs.help_Nekmo_ffmpeg import generate_screen_shots
 from helper_funcs.display_progress import humanbytes, progress_for_pyrogram
 from pyrogram.types import (
     CallbackQuery, InputMediaAudio, InputMediaPhoto, InputMediaVideo,
     InputMediaDocument, InlineKeyboardButton, InlineKeyboardMarkup)
 
-from plugins.custom_thumbnail import Gthumb01, Gthumb02
+
 logging.basicConfig(
     level=logging.DEBUG, format="%(asctime)s - %(name)s - %(levelname)s - %(message)s"
 )
