@@ -10,7 +10,7 @@ import logging
 # the logging things
 import pyrogram
 from PIL import Image
-from config import Config
+from sample_config import Config
 from translation import Translation
 from pyrogram import Client, filters
 from hachoir.parser import createParser
