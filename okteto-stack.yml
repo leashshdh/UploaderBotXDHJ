@@ -1,0 +1,18 @@
+services:
+  uploader-bot:
+    build: .
+    environment:
+      WEBHOOK: $WEBHOOK
+      APP_ID: $APP_ID 
+      API_HASH: $API_HASH 
+      TG_BOT_TOKEN: $TG_BOT_TOKEN
+      DATABASE_URL: $DATABASE_URL
+      AUTH_USERS: $AUTH_USERS
+      BANNED_USERS: $BANNED_USERS
+      UPDATE_CHANNEL: $UPDATE_CHANNEL
+      DEF_THUMB_NAIL_VID_S: $DEF_THUMB_NAIL_VID_S
+      CHUNK_SIZE: $CHUNK_SIZE
+      HTTP_PROXY: $UPSTREAM_REPO
+    resources:
+      cpu: 1000m
+      memory: 3Gi
