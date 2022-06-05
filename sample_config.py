@@ -42,4 +42,3 @@ class Config(object):
 
     DATABASE_NAME = "LegendBot"
     DATABASE_URL = os.environ.get("DATABASE_URL", "")
-
