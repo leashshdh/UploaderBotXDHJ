@@ -38,3 +38,8 @@ class Config(object):
     PROCESS_MAX_TIMEOUT = 3600
     # watermark file
     DEF_WATER_MARK_FILE = ""
+    # database
+
+    DATABASE_NAME = "LegendBot"
+    DATABASE_URL = os.environ.get("DATABASE_URL", "")
+
