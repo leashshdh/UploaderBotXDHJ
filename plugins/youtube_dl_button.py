@@ -12,7 +12,9 @@ import logging
 import pyrogram
 from PIL import Image
 from datetime import datetime
+from database.database import db
 from translation import Translation
+from plugins.custom_thumbnail import *
 from hachoir.parser import createParser
 from hachoir.metadata import extractMetadata
 # the logging things
@@ -24,9 +26,6 @@ from pyrogram.types import (
     CallbackQuery, InputMediaAudio, InputMediaPhoto, InputMediaVideo,
     InputMediaDocument, InlineKeyboardButton, InlineKeyboardMarkup)
 
-from database.database import db
-
-from plugins.custom_thumbnail import *
 
 logging.basicConfig(
     level=logging.DEBUG, format="%(asctime)s - %(name)s - %(levelname)s - %(message)s"
@@ -307,8 +306,8 @@ async def youtube_dl_call_back(bot, update):
                     progress_args=(
                         Translation.UPLOAD_START,
                         update.message,
-                        start_time
-                    )
+                        start_time,
+                    ),
                 )
             elif tg_send_type == "vm":
                 width, duration = await Mdata02(download_directory)
@@ -324,13 +323,13 @@ async def youtube_dl_call_back(bot, update):
                     progress_args=(
                         Translation.UPLOAD_START,
                         update.message,
-                        start_time
-                    )
+                        start_time,
+                    ),
                 )
             elif tg_send_type == "video":
-                 width, height, duration = await Mdata01(download_directory)
-                 thumbnail = await Gthumb02(bot, update, duration, download_directory)
-                 await bot.send_video(
+                width, height, duration = await Mdata01(download_directory)
+                thumbnail = await Gthumb02(bot, update, duration, download_directory)
+                await bot.send_video(
                     chat_id=update.message.chat.id,
                     video=download_directory,
                     caption=description,
@@ -345,8 +344,8 @@ async def youtube_dl_call_back(bot, update):
                     progress_args=(
                         Translation.UPLOAD_START,
                         update.message,
-                        start_time
-                    )
+                        start_time,
+                    ),
                 )
             else:
                 logger.info("Did this happen? :\\")
