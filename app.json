@@ -28,6 +28,10 @@
       "description": "Get this value from https://my.telegram.org",
       "value": ""
     },
+    "DATABASE_URL": {
+      "description": "Get this value from mongo database",
+      "value": ""
+    },
     "API_HASH": {
       "description": "Get this value from https://my.telegram.org",
       "value": ""
