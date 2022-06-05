@@ -24,7 +24,7 @@ from pyrogram.types import (
     CallbackQuery, InputMediaAudio, InputMediaPhoto, InputMediaVideo,
     InputMediaDocument, InlineKeyboardButton, InlineKeyboardMarkup)
 
-
+from plugins.custom_thumbnail import Gthumb01, Gthumb02
 logging.basicConfig(
     level=logging.DEBUG, format="%(asctime)s - %(name)s - %(levelname)s - %(message)s"
 )
@@ -373,6 +373,7 @@ async def youtube_dl_call_back(bot, update):
                     ),
                 )
             elif tg_send_type == "video":
+                thumbnail = await Gthumb02(bot, update, duration, download_directory)
                 await bot.send_video(
                     chat_id=update.message.chat.id,
                     video=download_directory,
