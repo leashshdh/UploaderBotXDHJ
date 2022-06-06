@@ -3,10 +3,10 @@ import os
 
 class Config(object):
     # get a token from @BotFather
-    TG_BOT_TOKEN = os.environ.get("TG_BOT_TOKEN", "")
+    TG_BOT_TOKEN = ""
     # The Telegram API things
-    APP_ID = int(os.environ.get("APP_ID", 12345))
-    API_HASH = os.environ.get("API_HASH")
+    APP_ID = 13519785
+    API_HASH = "22a8c34e40082b2fce539266efa1f531"
     # Get these values from my.telegram.org
     # Array to store users who are authorized to use the bot
     AUTH_USERS = set(int(x) for x in os.environ.get("AUTH_USERS", "").split())
@@ -24,8 +24,8 @@ class Config(object):
     CHUNK_SIZE = int(os.environ.get("CHUNK_SIZE", 128))
     # default thumbnail to be used in the videos
     DEF_THUMB_NAIL_VID_S = os.environ.get(
-        "DEF_THUMB_NAIL_VID_S", "https://placehold.it/90x90"
-    )
+        "DEF_THUMB_NAIL_VID_S", ""
+    ) # https://placehold.it/90x90
     # proxy for accessing youtube-dl in GeoRestricted Areas
     # Get your own proxy from
     # https://github.com/rg3/youtube-dl/issues/1091#issuecomment-230163061
@@ -41,4 +41,4 @@ class Config(object):
     # database
 
     DATABASE_NAME = "LegendBot"
-    DATABASE_URL = os.environ.get("DATABASE_URL", "")
+    DATABASE_URL = ""
